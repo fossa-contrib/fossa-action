@@ -38,5 +38,5 @@ jobs:
 
 - `fossa-api-key`: This input is used to upload the results of the build
   analysis.
-- `github-token`: This input is used to get the latest `fossa-cli` from GitHub
-  API.
+- `github-token`: This input is used to get the latest release of `fossa-cli`
+  from GitHub API.
