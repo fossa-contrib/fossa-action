@@ -40,3 +40,7 @@ jobs:
   analysis.
 - `github-token`: This input is used to get the latest release of `fossa-cli`
   from GitHub API.
+
+## License scan
+
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B7767%2Fgithub.com%2Ffossa-contrib%2Ffossa-action.svg?type=large)](https://app.fossa.com/projects/custom%2B7767%2Fgithub.com%2Ffossa-contrib%2Ffossa-action?ref=badge_large)
