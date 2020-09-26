@@ -9547,6 +9547,7 @@ var core = __webpack_require__(2186);
 var github = __webpack_require__(5438);
 var tc = __webpack_require__(7784);
 var constants_1 = __webpack_require__(9042);
+var octokit = github.getOctokit(constants_1.GITHUB_TOKEN);
 function getPlatform() {
     switch (process.platform) {
         case "win32":
@@ -9559,19 +9560,18 @@ function getPlatform() {
 }
 function getLatestRelease() {
     return __awaiter(this, void 0, void 0, function () {
-        var octokit, _a, assets, version, browserDownloadUrl;
+        var _a, assets, version, browserDownloadUrl;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
-                    octokit = github.getOctokit(constants_1.GITHUB_TOKEN);
-                    return [4 /*yield*/, octokit.repos.getLatestRelease({
-                            owner: "fossas",
-                            repo: "fossa-cli",
-                        })];
+                case 0: return [4 /*yield*/, octokit.repos.getLatestRelease({
+                        owner: "fossas",
+                        repo: "fossa-cli",
+                    })];
                 case 1:
                     _a = (_b.sent()).data, assets = _a.assets, version = _a.tag_name;
                     browserDownloadUrl = assets.filter(function (asset) {
-                        return asset.browser_download_url.includes(getPlatform());
+                        var platform = getPlatform();
+                        return asset.browser_download_url.includes(platform);
                     })[0].browser_download_url;
                     return [2 /*return*/, { version: version, browserDownloadUrl: browserDownloadUrl }];
             }
@@ -9597,46 +9597,31 @@ function extract(cliDownloadedPath) {
         });
     });
 }
-function cache(cliExtractedPath, version) {
-    return __awaiter(this, void 0, void 0, function () {
-        var platform, cachedPath;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    platform = getPlatform();
-                    return [4 /*yield*/, tc.cacheDir(cliExtractedPath, "fossa", version, platform)];
-                case 1:
-                    cachedPath = _a.sent();
-                    return [2 /*return*/, cachedPath];
-            }
-        });
-    });
-}
 function acquireFossaCli() {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, browserDownloadUrl, version, platform, cliDownloadedPath, cliExtractedPath, cachedPath, _b, _c;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var _a, browserDownloadUrl, version, platform, cliDownloadedPath, cliExtractedPath, cachedPath, cachedPath_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4 /*yield*/, getLatestRelease()];
                 case 1:
-                    _a = _d.sent(), browserDownloadUrl = _a.browserDownloadUrl, version = _a.version;
+                    _a = _b.sent(), browserDownloadUrl = _a.browserDownloadUrl, version = _a.version;
                     platform = getPlatform();
                     return [4 /*yield*/, tc.downloadTool(browserDownloadUrl)];
                 case 2:
-                    cliDownloadedPath = _d.sent();
+                    cliDownloadedPath = _b.sent();
                     return [4 /*yield*/, extract(cliDownloadedPath)];
                 case 3:
-                    cliExtractedPath = _d.sent();
+                    cliExtractedPath = _b.sent();
                     cachedPath = tc.find("fossa", version, platform);
                     if (!(cachedPath === "")) return [3 /*break*/, 5];
-                    _c = (_b = core).addPath;
-                    return [4 /*yield*/, cache(cliExtractedPath, version)];
+                    return [4 /*yield*/, tc.cacheDir(cliExtractedPath, "fossa", version, platform)];
                 case 4:
-                    _c.apply(_b, [_d.sent()]);
+                    cachedPath_1 = _b.sent();
+                    core.addPath(cachedPath_1);
                     return [3 /*break*/, 6];
                 case 5:
                     core.addPath(cachedPath);
-                    _d.label = 6;
+                    _b.label = 6;
                 case 6: return [2 /*return*/];
             }
         });

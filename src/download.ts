@@ -4,6 +4,8 @@ import * as tc from "@actions/tool-cache";
 
 import { GITHUB_TOKEN } from "./constants";
 
+const octokit = github.getOctokit(GITHUB_TOKEN);
+
 function getPlatform() {
   switch (process.platform) {
     case "win32":
@@ -16,8 +18,6 @@ function getPlatform() {
 }
 
 async function getLatestRelease() {
-  const octokit = github.getOctokit(GITHUB_TOKEN);
-
   const {
     data: { assets, tag_name: version },
   } = await octokit.repos.getLatestRelease({
@@ -25,10 +25,11 @@ async function getLatestRelease() {
     repo: "fossa-cli",
   });
 
-  const [
-    { browser_download_url: browserDownloadUrl },
-  ] = assets.filter((asset) =>
-    asset.browser_download_url.includes(getPlatform())
+  const [{ browser_download_url: browserDownloadUrl }] = assets.filter(
+    (asset) => {
+      const platform = getPlatform();
+      return asset.browser_download_url.includes(platform);
+    }
   );
 
   return { version, browserDownloadUrl };
@@ -44,32 +45,21 @@ async function extract(cliDownloadedPath: string) {
   }
 }
 
-async function cache(cliExtractedPath: string, version: string) {
-  const platform = getPlatform();
-
-  const cachedPath = await tc.cacheDir(
-    cliExtractedPath,
-    "fossa",
-    version,
-    platform
-  );
-
-  return cachedPath;
-}
-
 export async function acquireFossaCli(): Promise<void> {
   const { browserDownloadUrl, version } = await getLatestRelease();
-
   const platform = getPlatform();
-
   const cliDownloadedPath = await tc.downloadTool(browserDownloadUrl);
-
   const cliExtractedPath = await extract(cliDownloadedPath);
-
   const cachedPath = tc.find("fossa", version, platform);
 
   if (cachedPath === "") {
-    core.addPath(await cache(cliExtractedPath, version));
+    const cachedPath = await tc.cacheDir(
+      cliExtractedPath,
+      "fossa",
+      version,
+      platform
+    );
+    core.addPath(cachedPath);
   } else {
     core.addPath(cachedPath);
   }
