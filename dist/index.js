@@ -9468,12 +9468,17 @@ var exec_1 = __webpack_require__(1514);
 var constants_1 = __webpack_require__(9042);
 function analyze() {
     return __awaiter(this, void 0, void 0, function () {
+        var PATH;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, exec_1.exec("fossa", ["init"])];
+                case 0:
+                    PATH = process.env.PATH ? process.env.PATH : "";
+                    return [4 /*yield*/, exec_1.exec("fossa", ["init"])];
                 case 1:
                     _a.sent();
-                    return [4 /*yield*/, exec_1.exec("fossa", ["analyze"], { env: { FOSSA_API_KEY: constants_1.FOSSA_API_KEY } })];
+                    return [4 /*yield*/, exec_1.exec("fossa", ["analyze"], {
+                            env: { PATH: PATH, FOSSA_API_KEY: constants_1.FOSSA_API_KEY },
+                        })];
                 case 2:
                     _a.sent();
                     return [2 /*return*/];
