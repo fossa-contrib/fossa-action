@@ -1,0 +1,57 @@
+name: Main workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths-ignore:
+      - "**.md"
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install npm packages
+        run: yarn --frozen-lockfile
+
+      - name: Check formatting
+        run: yarn fmt:check
+
+      - name: Ensure dist directory is up-to-date
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          yarn build
+          if [ "$(git status --porcelain | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
+
+      - name: Run and upload build analysis
+        uses: ./
+        with:
+          fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
+          github-token: ${{ github.token }}

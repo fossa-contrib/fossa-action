@@ -1,0 +1,14 @@
+name: Fossa Action
+description: Actions for running FOSSA scans
+author: Sora Morimoto
+branding:
+  icon: package
+  color: gray-dark
+inputs:
+  fossa-api-key:
+    required: true
+  github-token:
+    required: true
+runs:
+  using: node12
+  main: dist/index.js
