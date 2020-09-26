@@ -9604,7 +9604,7 @@ function extract(cliDownloadedPath) {
 }
 function acquireFossaCli() {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, browserDownloadUrl, version, platform, cachedPath, cliDownloadedPath, cliExtractedPath, cachedPath_1;
+        var _a, browserDownloadUrl, version, platform, cachedPath, downloadedPath, extractedPath, cachedPath_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, getLatestRelease()];
@@ -9615,11 +9615,11 @@ function acquireFossaCli() {
                     if (!(cachedPath === "")) return [3 /*break*/, 5];
                     return [4 /*yield*/, tc.downloadTool(browserDownloadUrl)];
                 case 2:
-                    cliDownloadedPath = _b.sent();
-                    return [4 /*yield*/, extract(cliDownloadedPath)];
+                    downloadedPath = _b.sent();
+                    return [4 /*yield*/, extract(downloadedPath)];
                 case 3:
-                    cliExtractedPath = _b.sent();
-                    return [4 /*yield*/, tc.cacheDir(cliExtractedPath, "fossa", version, platform)];
+                    extractedPath = _b.sent();
+                    return [4 /*yield*/, tc.cacheDir(extractedPath, "fossa", version, platform)];
                 case 4:
                     cachedPath_1 = _b.sent();
                     core.addPath(cachedPath_1);
