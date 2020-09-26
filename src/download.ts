@@ -48,11 +48,11 @@ async function extract(cliDownloadedPath: string) {
 export async function acquireFossaCli(): Promise<void> {
   const { browserDownloadUrl, version } = await getLatestRelease();
   const platform = getPlatform();
-  const cliDownloadedPath = await tc.downloadTool(browserDownloadUrl);
-  const cliExtractedPath = await extract(cliDownloadedPath);
   const cachedPath = tc.find("fossa", version, platform);
 
   if (cachedPath === "") {
+    const cliDownloadedPath = await tc.downloadTool(browserDownloadUrl);
+    const cliExtractedPath = await extract(cliDownloadedPath);
     const cachedPath = await tc.cacheDir(
       cliExtractedPath,
       "fossa",
