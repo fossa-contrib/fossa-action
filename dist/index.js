@@ -7270,13 +7270,15 @@ var require_tool_cache = __commonJS((exports) => {
   }
 });
 
+// src/analyze.ts
+const exec = __toModule(require_exec());
+
 // src/constants.ts
 const core = __toModule(require_core());
 const FOSSA_API_KEY = core.getInput("fossa-api-key");
 const GITHUB_TOKEN = core.getInput("github-token");
 
 // src/analyze.ts
-const exec = __toModule(require_exec());
 async function analyze() {
   const PATH = process.env.PATH ? process.env.PATH : "";
   await exec.exec("fossa", ["init"]);
