@@ -9,6 +9,8 @@ inputs:
     required: true
   github-token:
     required: true
+  skip-test:
+    default: true
 runs:
   using: node12
   main: dist/index.js

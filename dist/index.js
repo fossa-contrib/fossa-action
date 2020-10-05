@@ -7277,6 +7277,7 @@ const exec = __toModule(require_exec());
 const core = __toModule(require_core());
 const FOSSA_API_KEY = core.getInput("fossa-api-key");
 const GITHUB_TOKEN = core.getInput("github-token");
+const SKIP_TEST = (core.getInput("skip-test") || "false").toUpperCase() === "TRUE";
 
 // src/analyze.ts
 async function analyze() {
@@ -7284,7 +7285,9 @@ async function analyze() {
   const options = {env: {PATH, FOSSA_API_KEY}};
   await exec.exec("fossa", ["init"]);
   await exec.exec("fossa", ["analyze"], options);
-  await exec.exec("fossa", ["test"], options);
+  if (!SKIP_TEST) {
+    await exec.exec("fossa", ["test"], options);
+  }
 }
 
 // src/download.ts
