@@ -7281,10 +7281,10 @@ const GITHUB_TOKEN = core.getInput("github-token");
 // src/analyze.ts
 async function analyze() {
   const PATH = process.env.PATH ? process.env.PATH : "";
+  const options = {env: {PATH, FOSSA_API_KEY}};
   await exec.exec("fossa", ["init"]);
-  await exec.exec("fossa", ["analyze"], {
-    env: {PATH, FOSSA_API_KEY}
-  });
+  await exec.exec("fossa", ["analyze"], options);
+  await exec.exec("fossa", ["test"], options);
 }
 
 // src/download.ts
