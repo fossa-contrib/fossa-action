@@ -1,6 +1,6 @@
 {
   "name": "fossa-action",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "private": true,
   "description": "Actions for running FOSSA scans",
   "author": "Sora Morimoto <sora@morimoto.io>",
