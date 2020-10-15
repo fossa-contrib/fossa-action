@@ -1267,7 +1267,6 @@ var require_context = __commonJS((exports) => {
 var require_proxy = __commonJS((exports) => {
   "use strict";
   Object.defineProperty(exports, "__esModule", {value: true});
-  const url = require("url");
   function getProxyUrl(reqUrl) {
     let usingSsl = reqUrl.protocol === "https:";
     let proxyUrl;
@@ -1281,7 +1280,7 @@ var require_proxy = __commonJS((exports) => {
       proxyVar = process.env["http_proxy"] || process.env["HTTP_PROXY"];
     }
     if (proxyVar) {
-      proxyUrl = url.parse(proxyVar);
+      proxyUrl = new URL(proxyVar);
     }
     return proxyUrl;
   }
@@ -1546,7 +1545,6 @@ var require_tunnel2 = __commonJS((exports, module2) => {
 var require_http_client = __commonJS((exports) => {
   "use strict";
   Object.defineProperty(exports, "__esModule", {value: true});
-  const url = require("url");
   const http = require("http");
   const https = require("https");
   const pm = require_proxy();
@@ -1591,7 +1589,7 @@ var require_http_client = __commonJS((exports) => {
     MediaTypes2["ApplicationJson"] = "application/json";
   })(MediaTypes = exports.MediaTypes || (exports.MediaTypes = {}));
   function getProxyUrl(serverUrl) {
-    let proxyUrl = pm.getProxyUrl(url.parse(serverUrl));
+    let proxyUrl = pm.getProxyUrl(new URL(serverUrl));
     return proxyUrl ? proxyUrl.href : "";
   }
   exports.getProxyUrl = getProxyUrl;
@@ -1610,6 +1608,15 @@ var require_http_client = __commonJS((exports) => {
   const RetryableHttpVerbs = ["OPTIONS", "GET", "DELETE", "HEAD"];
   const ExponentialBackoffCeiling = 10;
   const ExponentialBackoffTimeSlice = 5;
+  class HttpClientError extends Error {
+    constructor(message, statusCode) {
+      super(message);
+      this.name = "HttpClientError";
+      this.statusCode = statusCode;
+      Object.setPrototypeOf(this, HttpClientError.prototype);
+    }
+  }
+  exports.HttpClientError = HttpClientError;
   class HttpClientResponse {
     constructor(message) {
       this.message = message;
@@ -1628,7 +1635,7 @@ var require_http_client = __commonJS((exports) => {
   }
   exports.HttpClientResponse = HttpClientResponse;
   function isHttps(requestUrl) {
-    let parsedUrl = url.parse(requestUrl);
+    let parsedUrl = new URL(requestUrl);
     return parsedUrl.protocol === "https:";
   }
   exports.isHttps = isHttps;
@@ -1724,7 +1731,7 @@ var require_http_client = __commonJS((exports) => {
       if (this._disposed) {
         throw new Error("Client has already been disposed.");
       }
-      let parsedUrl = url.parse(requestUrl);
+      let parsedUrl = new URL(requestUrl);
       let info = this._prepareRequest(verb, parsedUrl, headers);
       let maxTries = this._allowRetries && RetryableHttpVerbs.indexOf(verb) != -1 ? this._maxRetries + 1 : 1;
       let numTries = 0;
@@ -1751,7 +1758,7 @@ var require_http_client = __commonJS((exports) => {
           if (!redirectUrl) {
             break;
           }
-          let parsedRedirectUrl = url.parse(redirectUrl);
+          let parsedRedirectUrl = new URL(redirectUrl);
           if (parsedUrl.protocol == "https:" && parsedUrl.protocol != parsedRedirectUrl.protocol && !this._allowRedirectDowngrade) {
             throw new Error("Redirect from HTTPS to HTTP protocol. This downgrade is not allowed for security reasons. If you want to allow this behavior, set the allowRedirectDowngrade option to true.");
           }
@@ -1836,7 +1843,7 @@ var require_http_client = __commonJS((exports) => {
       }
     }
     getAgent(serverUrl) {
-      let parsedUrl = url.parse(serverUrl);
+      let parsedUrl = new URL(serverUrl);
       return this._getAgent(parsedUrl);
     }
     _prepareRequest(method, requestUrl, headers) {
@@ -1903,7 +1910,7 @@ var require_http_client = __commonJS((exports) => {
           maxSockets,
           keepAlive: this._keepAlive,
           proxy: {
-            proxyAuth: proxyUrl.auth,
+            proxyAuth: `${proxyUrl.username}:${proxyUrl.password}`,
             host: proxyUrl.hostname,
             port: proxyUrl.port
           }
@@ -1982,11 +1989,8 @@ var require_http_client = __commonJS((exports) => {
           } else {
             msg = "Failed request: (" + statusCode + ")";
           }
-          let err = new Error(msg);
-          err["statusCode"] = statusCode;
-          if (response.result) {
-            err["result"] = response.result;
-          }
+          let err = new HttpClientError(msg, statusCode);
+          err.result = response.result;
           reject(err);
         } else {
           resolve(response);
@@ -2261,6 +2265,14 @@ var require_dist_node2 = __commonJS((exports) => {
     });
     return result;
   }
+  function removeUndefinedProperties(obj) {
+    for (const key in obj) {
+      if (obj[key] === void 0) {
+        delete obj[key];
+      }
+    }
+    return obj;
+  }
   function merge(defaults, route, options) {
     if (typeof route === "string") {
       let [method, url] = route.split(" ");
@@ -2274,6 +2286,8 @@ var require_dist_node2 = __commonJS((exports) => {
       options = Object.assign({}, route);
     }
     options.headers = lowercaseKeys(options.headers);
+    removeUndefinedProperties(options);
+    removeUndefinedProperties(options.headers);
     const mergedOptions = mergeDeep(defaults || {}, options);
     if (defaults && defaults.mediaType.previews.length) {
       mergedOptions.mediaType.previews = defaults.mediaType.previews.filter((preview) => !mergedOptions.mediaType.previews.includes(preview)).concat(mergedOptions.mediaType.previews);
@@ -2431,7 +2445,7 @@ var require_dist_node2 = __commonJS((exports) => {
   }
   function parse(options) {
     let method = options.method.toUpperCase();
-    let url = (options.url || "/").replace(/:([a-z]\w+)/g, "{+$1}");
+    let url = (options.url || "/").replace(/:([a-z]\w+)/g, "{$1}");
     let headers = Object.assign({}, options.headers);
     let body;
     let parameters = omit(options, ["method", "baseUrl", "url", "headers", "request", "mediaType"]);
@@ -2497,7 +2511,7 @@ var require_dist_node2 = __commonJS((exports) => {
       parse
     });
   }
-  const VERSION = "6.0.6";
+  const VERSION = "6.0.8";
   const userAgent = `octokit-endpoint.js/${VERSION} ${universalUserAgent.getUserAgent()}`;
   const DEFAULTS = {
     method: "GET",
@@ -7281,7 +7295,7 @@ const SKIP_TEST = (core.getInput("skip-test") || "false").toUpperCase() === "TRU
 
 // src/analyze.ts
 async function analyze() {
-  const PATH = process.env.PATH ? process.env.PATH : "";
+  const PATH = process.env.PATH || "";
   const options = {env: {PATH, FOSSA_API_KEY}};
   await exec.exec("fossa", ["init"]);
   await exec.exec("fossa", ["analyze"], options);
@@ -7290,7 +7304,7 @@ async function analyze() {
   }
 }
 
-// src/download.ts
+// src/installer.ts
 const core2 = __toModule(require_core());
 const github = __toModule(require_github());
 const tc = __toModule(require_tool_cache());
@@ -7330,11 +7344,11 @@ async function extract(cliDownloadedPath) {
 async function acquireFossaCli() {
   const {browserDownloadUrl, version} = await getLatestRelease();
   const platform = getPlatform();
-  const cachedPath = tc.find("fossa", version, platform);
+  const cachedPath = tc.find("fossa-cli", version, platform);
   if (cachedPath === "") {
     const downloadedPath = await tc.downloadTool(browserDownloadUrl);
     const extractedPath = await extract(downloadedPath);
-    const cachedPath2 = await tc.cacheDir(extractedPath, "fossa", version, platform);
+    const cachedPath2 = await tc.cacheDir(extractedPath, "fossa-cli", version, platform);
     core2.addPath(cachedPath2);
   } else {
     core2.addPath(cachedPath);
