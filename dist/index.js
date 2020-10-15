@@ -7296,7 +7296,7 @@ const SKIP_TEST = (core.getInput("skip-test") || "false").toUpperCase() === "TRU
 // src/analyze.ts
 async function analyze() {
   const PATH = process.env.PATH || "";
-  const options = {env: {PATH, FOSSA_API_KEY}};
+  const options = {env: {...process.env, PATH, FOSSA_API_KEY}};
   await exec.exec("fossa", ["init"]);
   await exec.exec("fossa", ["analyze"], options);
   if (!SKIP_TEST) {
