@@ -24,7 +24,7 @@ There is a point that is particularly easy to misunderstand. It's where you
 specify the version of the action _itself_.
 
 ```yml
-- name: Run and upload build analysis
+- name: Run FOSSA scan and upload build data
   uses: fossa-contrib/fossa-action@v1
   #                               ^^^
   with:
@@ -66,7 +66,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run and upload build analysis
+      - name: Run FOSSA scan and upload build data
         uses: fossa-contrib/fossa-action@v1
         with:
           fossa-api-key: ${{ secrets.FOSSA_API_KEY }}

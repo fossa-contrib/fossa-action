@@ -60,7 +60,7 @@ jobs:
             exit 1
           fi
 
-      - name: Run and upload build analysis
+      - name: Run FOSSA scan and upload build data
         uses: ./
         with:
           fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
