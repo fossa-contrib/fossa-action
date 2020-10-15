@@ -6,9 +6,9 @@
 
 ## Synopsis
 
-The action sets up the latest release of `fossa-cli`, infer the correct
-configuration from the current system state, analyze the project for a list of
-its dependencies, and upload the results to FOSSA.
+The action sets up and caches the latest release of `fossa-cli`, infer the
+correct configuration from the current system state, analyze the project for a
+list of its dependencies, and upload the results to FOSSA.
 
 ## Roadmap
 
