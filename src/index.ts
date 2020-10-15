@@ -1,5 +1,5 @@
 import { analyze } from "./analyze";
-import { acquireFossaCli } from "./download";
+import { acquireFossaCli } from "./installer";
 
 async function run() {
   await acquireFossaCli();
