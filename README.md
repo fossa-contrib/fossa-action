@@ -29,7 +29,6 @@ specify the version of the action _itself_.
   #                               ^^^
   with:
     fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
-    github-token: ${{ github.token }}
 ```
 
 We recommend that you include the version of the action. We adhere to
@@ -70,7 +69,6 @@ jobs:
         uses: fossa-contrib/fossa-action@v1
         with:
           fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
-          github-token: ${{ github.token }}
 ```
 
 ## Inputs
