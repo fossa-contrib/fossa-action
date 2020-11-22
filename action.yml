@@ -8,7 +8,7 @@ inputs:
   fossa-api-key:
     required: true
   github-token:
-    required: true
+    default: ${{ github.token }}
   skip-test:
     default: true
 runs:
