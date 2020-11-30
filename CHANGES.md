@@ -1,3 +1,7 @@
+# v1.1.3 - 2020-11-30
+
+- Provide the `github.token` by default
+
 ## v1.1.2 - 2020-10-16
 
 - Pass all `process.env` children to the exec function
