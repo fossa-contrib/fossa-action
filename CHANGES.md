@@ -1,4 +1,4 @@
-# v1.1.3 - 2020-11-30
+## v1.1.3 - 2020-11-30
 
 - Provide the `github.token` by default
 
