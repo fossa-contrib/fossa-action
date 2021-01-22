@@ -20,7 +20,7 @@
     "@vercel/ncc": "0.27.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.21",
+    "@types/node": "14.14.22",
     "@typescript-eslint/eslint-plugin": "4.13.0",
     "@typescript-eslint/parser": "4.13.0",
     "eslint": "7.18.0",
