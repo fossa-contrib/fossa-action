@@ -10,7 +10,7 @@
     "fmt:check": "prettier --check .",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.ts\" --cache",
-    "build": "ncc build src/index.ts --out=dist --license=LICENSE.txt --v8-cache"
+    "build": "ncc build src/index.ts --license=LICENSE.txt"
   },
   "dependencies": {
     "@actions/core": "1.2.6",
