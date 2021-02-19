@@ -18,6 +18,40 @@ latest release of `fossa-cli`.
 
 ## Usage
 
+### Push-only API token
+
+If you are an open-source project maintainer, you probably want to check pull
+requests from external contributors with FOSSA, but it's impossible to do with
+secrets when the workflow runs on the pull request event due to GitHub's
+constraints. However, FOSSA has the
+[push-only API](https://docs.fossa.com/docs/api-reference#push-only-api-token)
+token, allowing you to safely check pull requests.
+
+There is no problem with this:
+
+```yml
+- name: Run FOSSA scan and upload build data
+  uses: fossa-contrib/fossa-action@v1
+  with:
+    fossa-api-key: abcdefghijklmnopqrstuvwxyz
+  #                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+This will cause an error on the pull request event:
+
+```yml
+- name: Run FOSSA scan and upload build data
+  uses: fossa-contrib/fossa-action@v1
+  with:
+    fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
+  #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+#### References
+
+- https://docs.fossa.com/docs/api-reference#push-only-api-token
+- https://securitylab.github.com/research/github-actions-preventing-pwn-requests
+
 ### How to specify the version
 
 There is a point that is particularly easy to misunderstand. It's where you
@@ -28,7 +62,7 @@ specify the version of the action _itself_.
   uses: fossa-contrib/fossa-action@v1
   #                               ^^^
   with:
-    fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
+    fossa-api-key: abcdefghijklmnopqrstuvwxyz
 ```
 
 We recommend that you include the version of the action. We adhere to
@@ -41,9 +75,9 @@ steps:
   # Reference the major version of a release (most recommended)
   - uses: fossa-contrib/fossa-action@v1
   # Reference a specific commit (most strict)
-  - uses: fossa-contrib/fossa-action@4fb2464
+  - uses: fossa-contrib/fossa-action@abcdefg
   # Reference a semver version of a release (not recommended)
-  - uses: fossa-contrib/fossa-action@v1.0.2
+  - uses: fossa-contrib/fossa-action@v1.0.0
   # Reference a branch (most dangerous)
   - uses: fossa-contrib/fossa-action@master
 ```
@@ -68,7 +102,7 @@ jobs:
       - name: Run FOSSA scan and upload build data
         uses: fossa-contrib/fossa-action@v1
         with:
-          fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
+          fossa-api-key: abcdefghijklmnopqrstuvwxyz
 ```
 
 ## Inputs
