@@ -9580,11 +9580,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var core = __nccwpck_require__(2186);
+var github = __nccwpck_require__(5438);
 var analyze_1 = __nccwpck_require__(2176);
+var constants_1 = __nccwpck_require__(9042);
 var installer_1 = __nccwpck_require__(2574);
+var eventName = github.context.eventName;
 function run() {
     return __awaiter(this, void 0, void 0, function () {
-        var error_1;
+        var error_1, isEmpty;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -9598,6 +9601,10 @@ function run() {
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
+                    isEmpty = constants_1.FOSSA_API_KEY.length === 0;
+                    if (eventName === "pull_request" && isEmpty) {
+                        core.warning("You can not use secrets on the pull request event. If you are using them together, see the documentation: https://github.com/fossa-contrib/fossa-action#push-only-api-token");
+                    }
                     core.setFailed(error_1.message);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
