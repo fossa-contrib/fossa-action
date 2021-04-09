@@ -17,18 +17,19 @@
     "@actions/exec": "1.0.4",
     "@actions/github": "4.0.0",
     "@actions/tool-cache": "1.6.1",
-    "@vercel/ncc": "0.27.0"
+    "@vercel/ncc": "0.28.2"
   },
   "devDependencies": {
-    "@types/node": "14.14.35",
+    "@types/node": "14.14.37",
     "@typescript-eslint/eslint-plugin": "4.21.0",
-    "@typescript-eslint/parser": "4.16.1",
-    "eslint": "7.22.0",
-    "eslint-config-prettier": "7.2.0",
+    "@typescript-eslint/parser": "4.21.0",
+    "eslint": "7.23.0",
+    "eslint-config-prettier": "8.1.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "prettier": "2.2.1",
-    "typescript": "4.2.3"
+    "typescript": "4.2.4",
+    "webpack": "5.31.0"
   }
 }
