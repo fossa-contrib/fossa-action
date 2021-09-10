@@ -309,10 +309,10 @@
     "@typescript-eslint/types" "4.22.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vercel/ncc@0.28.3":
-  version "0.28.3"
-  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.28.3.tgz#9461bdbf334d616759b0e7e5415e2f480b9aa30f"
-  integrity sha512-g3gk4D9itbhUQa5MtN7TOdeoQnNLkPDCox5SBaQ/H3Or5lo59TOaZWrLb+x47StiAJ+8DXZS/9MJ67cIBWSsRw==
+"@vercel/ncc@0.31.0":
+  version "0.31.0"
+  resolved "https://registry.yarnpkg.com/@vercel/ncc/-/ncc-0.31.0.tgz#5035b80b49406d8b1d5922a0ba57fbbab03d0ea4"
+  integrity sha512-vpioWEFk00Sk5CgJj39LFAjqXcM0PLcaSqaEDeZZUKfHEKYmHL5tOns7Xd21/o4SKzRi+XE0qhEv9wWwkfmNaA==
 
 "@webassemblyjs/ast@1.11.0":
   version "1.11.0"
