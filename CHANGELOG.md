@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [unreleased]
 
+## [1.2.0] - 2021-11-14
+
 - Allow the endpoint flag to be set.
 
 ## [1.1.5] - 2021-11-14
@@ -65,7 +67,8 @@ and this project adheres to
 - Initial release.
 
 [unreleased]:
-  https://github.com/fossa-contrib/fossa-action/compare/v1.1.5...HEAD
+  https://github.com/fossa-contrib/fossa-action/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.5...v1.2.0
 [1.1.5]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.2...v1.1.3
