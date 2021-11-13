@@ -20,7 +20,7 @@ function getPlatform() {
 async function getLatestRelease() {
   const {
     data: { assets, tag_name: version },
-  } = await octokit.repos.getLatestRelease({
+  } = await octokit.rest.repos.getLatestRelease({
     owner: "fossas",
     repo: "fossa-cli",
   });
