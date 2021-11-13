@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [unreleased]
 
+- Allow the endpoint flag to be set.
+
 ## [1.1.5] - 2021-11-14
 
 - Introduce changes for fossa cli v3.

@@ -14,4 +14,6 @@ export const FOSSA_API_KEY = core.getInput("fossa-api-key");
 
 export const GITHUB_TOKEN = core.getInput("github-token");
 
+export const ENDPOINT = core.getInput("endpoint");
+
 export const SKIP_TEST = core.getBooleanInput("skip-test");

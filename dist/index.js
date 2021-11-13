@@ -15420,17 +15420,26 @@ var Platform;
 })(Platform || (Platform = {}));
 const FOSSA_API_KEY = core.getInput("fossa-api-key");
 const GITHUB_TOKEN = core.getInput("github-token");
+const ENDPOINT = core.getInput("endpoint");
 const SKIP_TEST = core.getBooleanInput("skip-test");
 
 ;// CONCATENATED MODULE: ./src/analyze.ts
 
 
+function getArgs() {
+    const args = [];
+    if (ENDPOINT) {
+        args.push(...["--endpoint", ENDPOINT]);
+    }
+    return args;
+}
 async function analyze() {
+    const args = getArgs();
     const PATH = process.env.PATH || "";
     const options = { env: { ...process.env, PATH, FOSSA_API_KEY: FOSSA_API_KEY } };
-    await (0,exec.exec)("fossa", ["analyze"], options);
+    await (0,exec.exec)("fossa", ["analyze", ...args], options);
     if (!SKIP_TEST) {
-        await (0,exec.exec)("fossa", ["test"], options);
+        await (0,exec.exec)("fossa", ["test", ...args], options);
     }
 }
 
