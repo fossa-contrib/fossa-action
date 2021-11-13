@@ -112,6 +112,7 @@ jobs:
   analysis.
 - `github-token`: This input is used to get the latest release of `fossa-cli`
   from GitHub API.
+- `endpoint`: This input is used to specify which fossa endpoint to use.
 - `skip-test`: This input is used to specify whether to execute
   [`fossa test`](https://github.com/fossas/fossa-cli/blob/master/docs/user-guide.md/#fossa-test).
   This takes a long time, so it's set to `true` by default.

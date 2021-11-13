@@ -8,8 +8,12 @@ inputs:
   fossa-api-key:
     required: true
   github-token:
+    required: false
     default: ${{ github.token }}
+  endpoint:
+    required: false
   skip-test:
+    required: false
     default: true
 runs:
   using: node12
