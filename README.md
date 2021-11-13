@@ -1,7 +1,8 @@
 # Fossa Action
 
-[![Main workflow](https://github.com/fossa-contrib/fossa-action/workflows/Main%20workflow/badge.svg?branch=master)](https://github.com/fossa-contrib/fossa-action/actions)
-[![CodeQL](https://github.com/fossa-contrib/fossa-action/workflows/CodeQL/badge.svg?branch=master)](https://github.com/fossa-contrib/fossa-action/actions)
+[![Test](https://github.com/fossa-contrib/fossa-action/actions/workflows/test.yml/badge.svg)](https://github.com/fossa-contrib/fossa-action/actions)
+[![Hygiene](https://github.com/fossa-contrib/fossa-action/actions/workflows/hygiene.yml/badge.svg)](https://github.com/fossa-contrib/fossa-action/actions)
+[![CodeQL](https://github.com/fossa-contrib/fossa-action/actions/workflows/codeql.yml/badge.svg)](https://github.com/fossa-contrib/fossa-action/actions)
 [![FOSSA Status](https://app.fossa.com/api/projects/custom%2B7767%2Fgithub.com%2Ffossa-contrib%2Ffossa-action.svg?type=small)](https://app.fossa.com/projects/custom%2B7767%2Fgithub.com%2Ffossa-contrib%2Ffossa-action?ref=badge_small)
 
 ## Synopsis

@@ -1,20 +1,12 @@
-name: Main workflow
+name: Hygiene
 
 on:
   - pull_request
   - push
 
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
-
-    runs-on: ${{ matrix.os }}
+  hygiene:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -47,8 +39,3 @@ jobs:
             git diff
             exit 1
           fi
-
-      - name: Run FOSSA scan and upload build data
-        uses: ./
-        with:
-          fossa-api-key: 570e8f8e839e20a229f196974ede9a4d
