@@ -18,7 +18,7 @@ async function getLatestRelease() {
 
   const platform = getPlatform();
   const architecture = getArchitecture();
-  const cleanVersion = semver.clean(version);
+  const cleanVersion = semver.clean(version) ?? version;
   const fname = `fossa_${cleanVersion}_${platform}_${architecture}.zip`;
 
   const [{ browser_download_url: browserDownloadUrl }] = assets.filter(
