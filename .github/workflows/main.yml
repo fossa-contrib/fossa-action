@@ -1,0 +1,93 @@
+name: Builds, tests & co
+
+on:
+  - pull_request
+  - push
+
+jobs:
+  hygiene:
+    name: Hygiene
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Install npm packages
+        run: yarn install --immutable
+
+      - name: Check formatting
+        run: yarn fmt:check
+
+      - name: Check lint
+        run: yarn lint
+
+      - name: Check type
+        run: yarn typecheck
+
+      - name: Ensure dist directory is up-to-date
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          yarn build
+          if [ "$(git status dist --porcelain | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build. See status below:"
+            git diff
+            exit 1
+          fi
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run FOSSA scan and upload build data
+        uses: ./
+        with:
+          fossa-api-key: 570e8f8e839e20a229f196974ede9a4d
+
+  build-and-push:
+    name: Build and Push
+
+    if: ${{ github.event_name == 'pull_request' }}
+
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Install npm packages
+        run: yarn install --immutable
+
+      - name: Run build
+        run: yarn build
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: yarn build
