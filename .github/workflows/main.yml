@@ -56,6 +56,8 @@ jobs:
   build-and-push:
     name: Build and Push
 
+    if: ${{ github.event_name == 'pull_request' }}
+
     permissions:
       contents: write
 
