@@ -43,6 +43,8 @@ jobs:
           fi
 
   test:
+    name: Test
+
     strategy:
       fail-fast: false
       matrix:
