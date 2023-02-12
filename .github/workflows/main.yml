@@ -1,8 +1,8 @@
 name: Builds, tests & co
 
 on:
-  - pull_request
   - push
+  - pull_request
 
 jobs:
   hygiene:
@@ -55,8 +55,6 @@ jobs:
 
   build-and-push:
     name: Build and Push
-
-    if: ${{ github.event_name == 'pull_request' }}
 
     permissions:
       contents: write
