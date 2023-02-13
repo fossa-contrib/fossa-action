@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [unreleased]
 
+## [2.0.0] - 2023-02-14
+
 ### Changed
 
 - Update default runtime to node16.
@@ -78,6 +80,7 @@ and this project adheres to
 
 [unreleased]:
   https://github.com/fossa-contrib/fossa-action/compare/v1.2.0...HEAD
+[2.0.0]: https://github.com/fossa-contrib/fossa-action/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.5...v1.2.0
 [1.1.5]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.3...v1.1.4
