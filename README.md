@@ -31,7 +31,7 @@ There is no problem with this:
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v1
+  uses: fossa-contrib/fossa-action@v2
   with:
     fossa-api-key: abcdefghijklmnopqrstuvwxyz
   #                ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -41,7 +41,7 @@ This will cause an error on the pull request event:
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v1
+  uses: fossa-contrib/fossa-action@v2
   with:
     fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
   #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -59,7 +59,7 @@ specify the version of the action _itself_.
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v1
+  uses: fossa-contrib/fossa-action@v2
   #                               ^^^
   with:
     fossa-api-key: abcdefghijklmnopqrstuvwxyz
@@ -73,11 +73,11 @@ workflow when we publish a breaking update and increase the major version.
 ```yml
 steps:
   # Reference the major version of a release (most recommended)
-  - uses: fossa-contrib/fossa-action@v1
+  - uses: fossa-contrib/fossa-action@v2
   # Reference a specific commit (most strict)
-  - uses: fossa-contrib/fossa-action@abcdefg
+  - uses: fossa-contrib/fossa-action@6728dc6
   # Reference a semver version of a release (not recommended)
-  - uses: fossa-contrib/fossa-action@v1.0.0
+  - uses: fossa-contrib/fossa-action@v2.0.0
   # Reference a branch (most dangerous)
   - uses: fossa-contrib/fossa-action@master
 ```
@@ -96,11 +96,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout tree
+        uses: actions/checkout@v3
 
       - name: Run FOSSA scan and upload build data
-        uses: fossa-contrib/fossa-action@v1
+        uses: fossa-contrib/fossa-action@v2
         with:
           fossa-api-key: abcdefghijklmnopqrstuvwxyz
 ```
