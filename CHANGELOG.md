@@ -8,15 +8,25 @@ and this project adheres to
 
 ## [unreleased]
 
+### Changed
+
+- Update default runtime to node16.
+
 ## [1.2.0] - 2021-11-14
+
+### Added
 
 - Allow the endpoint flag to be set.
 
 ## [1.1.5] - 2021-11-14
 
+### Fixed
+
 - Introduce changes for fossa cli v3.
 
 ## [1.1.4] - 2020-02-02
+
+### Fixed
 
 - Improve error handling at the entry point.
 
