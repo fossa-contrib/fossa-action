@@ -4,7 +4,8 @@
     "config:base",
     "schedule:daily",
     ":maintainLockFilesWeekly",
-    "schedule:automergeWeekends"
+    "schedule:automergeWeekends",
+    ":label(dependencies)"
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "rebaseWhen": "conflicted"
