@@ -2,8 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "schedule:earlyMondays",
+    "schedule:daily",
+    ":maintainLockFilesWeekly",
     "schedule:automergeWeekends"
   ],
-  "lockFileMaintenance": { "enabled": true }
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "rebaseWhen": "conflicted"
 }
