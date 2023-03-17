@@ -60,10 +60,7 @@ jobs:
   build-and-push:
     name: Build and Push
 
-    if: ${{ github.event_name == 'pull_request' }}
-
-    permissions:
-      contents: write
+    if: ${{ github.event_name == 'pull_request' && github.actor == 'renovate[bot]' }}
 
     runs-on: ubuntu-latest
 
@@ -71,6 +68,9 @@ jobs:
       - name: Checkout tree
         uses: actions/checkout@v3
         with:
+          fetch-depth: 2
+          ref: ${{ github.head_ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
           token: ${{ secrets.PAT }}
 
       - name: Use Node.js 16.x
@@ -84,7 +84,14 @@ jobs:
       - name: Run build
         run: yarn build
 
+      - name: Get last commit message
+        id: last-commit-message
+        run: echo "message=$(git log -1 --pretty=%s)" >>"$GITHUB_OUTPUT"
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: yarn build
+          commit_message: ${{ steps.last-commit-message.outputs.message }}
+          commit_options: --amend --no-edit
+          push_options: --force
+          skip_fetch: true

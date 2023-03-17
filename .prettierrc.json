@@ -1,4 +1,12 @@
 {
+  "$schema": "https://json.schemastore.org/prettierrc",
   "endOfLine": "auto",
-  "proseWrap": "always"
+  "overrides": [
+    {
+      "files": "*.md",
+      "options": {
+        "proseWrap": "always"
+      }
+    }
+  ]
 }
