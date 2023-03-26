@@ -1,7 +1,6 @@
 # Fossa Action
 
 [![Builds, tests & co](https://github.com/fossa-contrib/fossa-action/actions/workflows/main.yml/badge.svg)](https://github.com/fossa-contrib/fossa-action/actions)
-[![CodeQL](https://github.com/fossa-contrib/fossa-action/actions/workflows/codeql.yml/badge.svg)](https://github.com/fossa-contrib/fossa-action/actions)
 [![FOSSA Status](https://app.fossa.com/api/projects/custom%2B7767%2Fgithub.com%2Ffossa-contrib%2Ffossa-action.svg?type=small)](https://app.fossa.com/projects/custom%2B7767%2Fgithub.com%2Ffossa-contrib%2Ffossa-action?ref=badge_small)
 
 ## Synopsis
