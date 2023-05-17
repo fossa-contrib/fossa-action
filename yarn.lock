@@ -318,10 +318,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.16.9":
-  version: 18.16.9
-  resolution: "@types/node@npm:18.16.9"
-  checksum: 7fe0ef372ba8b157bd646efe29b0ece92ccb9f455171a7ceb4c92d6b490789ff0f14411b1dc6ad203351a0efa2b435072dfab5566fb6eaaaa5cd549e1fb22afa
+"@types/node@npm:18.16.12":
+  version: 18.16.12
+  resolution: "@types/node@npm:18.16.12"
+  checksum: 90b316c097a059534870bc8e358c7996d99e3bb4395c88a91b893b925ad34e32ff1177009ec6c16a6467266414dca64ec9613e9e6bb3f91b6de0ab629d3bb3b9
   languageName: node
   linkType: hard
 
@@ -1309,7 +1309,7 @@ __metadata:
     "@actions/exec": 1.1.1
     "@actions/github": 5.1.1
     "@actions/tool-cache": 2.0.1
-    "@types/node": 18.16.9
+    "@types/node": 18.16.12
     "@types/semver": 7.5.0
     "@typescript-eslint/eslint-plugin": 5.59.6
     "@typescript-eslint/parser": 5.59.6
