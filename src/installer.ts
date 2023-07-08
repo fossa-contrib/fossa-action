@@ -24,7 +24,7 @@ async function getLatestRelease() {
   const [{ browser_download_url: browserDownloadUrl }] = assets.filter(
     (asset) => {
       return asset.browser_download_url.endsWith(fname);
-    }
+    },
   );
 
   return { version, browserDownloadUrl };
@@ -42,7 +42,7 @@ export async function acquireFossaCli(): Promise<void> {
       extractedPath,
       "fossa-cli",
       version,
-      platform
+      platform,
     );
     core.addPath(cachedPath);
   } else {
