@@ -16,7 +16,7 @@ async function run() {
       const isEmpty = FOSSA_API_KEY.length === 0;
       if (eventName === "pull_request" && isEmpty) {
         core.warning(
-          "You can not use secrets on the pull request event. If you are using them together, see the documentation: https://github.com/fossa-contrib/fossa-action#push-only-api-token"
+          "You can not use secrets on the pull request event. If you are using them together, see the documentation: https://github.com/fossa-contrib/fossa-action#push-only-api-token",
         );
       }
       core.setFailed(error.message);
