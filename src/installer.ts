@@ -21,11 +21,11 @@ async function getLatestRelease() {
   const cleanVersion = semver.clean(version) ?? version;
   const fname = `fossa_${cleanVersion}_${platform}_${architecture}.zip`;
 
-  const [{ browser_download_url: browserDownloadUrl }] = assets.filter(
-    (asset) => {
-      return asset.browser_download_url.endsWith(fname);
-    },
+  const assetIndex = assets.findIndex((asset) =>
+    asset.browser_download_url.endsWith(fname),
   );
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const { browser_download_url: browserDownloadUrl } = assets[assetIndex]!;
 
   return { version, browserDownloadUrl };
 }

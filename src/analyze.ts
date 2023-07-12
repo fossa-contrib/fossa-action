@@ -12,7 +12,7 @@ function getArgs() {
 
 export async function analyze(): Promise<void> {
   const args = getArgs();
-  const PATH = process.env.PATH ?? "";
+  const PATH = process.env["PATH"] ?? "";
   const options = { env: { ...process.env, PATH, FOSSA_API_KEY } };
   await exec("fossa", ["analyze", ...args], options);
   if (!SKIP_TEST) {
