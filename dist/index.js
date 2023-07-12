@@ -20181,20 +20181,20 @@ const SKIP_TEST = core.getBooleanInput("skip-test");
 ;// CONCATENATED MODULE: ./src/analyze.ts
 
 
-function getArgs() {
-    const args = [];
+function getArguments() {
+    const arguments_ = [];
     if (ENDPOINT) {
-        args.push(...["--endpoint", ENDPOINT]);
+        arguments_.push("--endpoint", ENDPOINT);
     }
-    return args;
+    return arguments_;
 }
 async function analyze() {
-    const args = getArgs();
-    const PATH = process.env.PATH ?? "";
+    const arguments_ = getArguments();
+    const PATH = process.env["PATH"] ?? "";
     const options = { env: { ...process.env, PATH, FOSSA_API_KEY: FOSSA_API_KEY } };
-    await (0,exec.exec)("fossa", ["analyze", ...args], options);
+    await (0,exec.exec)("fossa", ["analyze", ...arguments_], options);
     if (!SKIP_TEST) {
-        await (0,exec.exec)("fossa", ["test", ...args], options);
+        await (0,exec.exec)("fossa", ["test", ...arguments_], options);
     }
 }
 
@@ -20202,29 +20202,35 @@ async function analyze() {
 var tool_cache = __nccwpck_require__(7784);
 // EXTERNAL MODULE: ./node_modules/semver/index.js
 var semver = __nccwpck_require__(1383);
-// EXTERNAL MODULE: external "os"
-var external_os_ = __nccwpck_require__(2037);
+;// CONCATENATED MODULE: external "node:os"
+const external_node_os_namespaceObject = require("node:os");
 ;// CONCATENATED MODULE: ./src/system.ts
 
 
 function getArchitecture() {
-    switch (external_os_.arch()) {
-        case "x64":
+    switch (external_node_os_namespaceObject.arch()) {
+        case "x64": {
             return Architecture.X64;
-        default:
+        }
+        default: {
             throw new Error("The architecture is not supported.");
+        }
     }
 }
 function getPlatform() {
-    switch (external_os_.platform()) {
-        case "darwin":
+    switch (external_node_os_namespaceObject.platform()) {
+        case "darwin": {
             return Platform.Darwin;
-        case "linux":
+        }
+        case "linux": {
             return Platform.Linux;
-        case "win32":
+        }
+        case "win32": {
             return Platform.Win32;
-        default:
+        }
+        default: {
             throw new Error("The platform is not supported.");
+        }
     }
 }
 
@@ -20245,9 +20251,9 @@ async function getLatestRelease() {
     const architecture = getArchitecture();
     const cleanVersion = semver.clean(version) ?? version;
     const fname = `fossa_${cleanVersion}_${platform}_${architecture}.zip`;
-    const [{ browser_download_url: browserDownloadUrl }] = assets.filter((asset) => {
-        return asset.browser_download_url.endsWith(fname);
-    });
+    const assetIndex = assets.findIndex((asset) => asset.browser_download_url.endsWith(fname));
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { browser_download_url: browserDownloadUrl } = assets[assetIndex];
     return { version, browserDownloadUrl };
 }
 async function acquireFossaCli() {
@@ -20287,6 +20293,7 @@ async function run() {
         }
     }
 }
+// eslint-disable-next-line unicorn/prefer-top-level-await
 void run();
 
 })();

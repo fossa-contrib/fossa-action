@@ -1,25 +1,31 @@
-import * as os from "os";
+import * as os from "node:os";
 
 import { Architecture, Platform } from "./constants";
 
 export function getArchitecture(): Architecture {
   switch (os.arch()) {
-    case "x64":
+    case "x64": {
       return Architecture.X64;
-    default:
+    }
+    default: {
       throw new Error("The architecture is not supported.");
+    }
   }
 }
 
 export function getPlatform(): Platform {
   switch (os.platform()) {
-    case "darwin":
+    case "darwin": {
       return Platform.Darwin;
-    case "linux":
+    }
+    case "linux": {
       return Platform.Linux;
-    case "win32":
+    }
+    case "win32": {
       return Platform.Win32;
-    default:
+    }
+    default: {
       throw new Error("The platform is not supported.");
+    }
   }
 }
