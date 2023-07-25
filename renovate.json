@@ -2,10 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
+    "helpers:pinGitHubActionDigests",
     "schedule:daily",
+    ":disableRateLimiting",
     ":maintainLockFilesWeekly",
-    "schedule:automergeWeekends",
-    ":label(dependencies)"
+    ":pinVersions",
+    ":semanticCommitsDisabled"
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "rebaseWhen": "conflicted"

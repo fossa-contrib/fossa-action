@@ -12,12 +12,12 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.3
         with:
           token: ${{ secrets.PAT }}
 
       - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: 16.x
 
@@ -59,7 +59,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.3
         with:
           token: ${{ secrets.PAT }}
 
@@ -77,7 +77,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.3
         with:
           fetch-depth: 2
           ref: ${{ github.head_ref }}
@@ -85,7 +85,7 @@ jobs:
           token: ${{ secrets.PAT }}
 
       - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: 16.x
 
@@ -100,7 +100,7 @@ jobs:
         run: echo "message=$(git log -1 --pretty=%s)" >>"$GITHUB_OUTPUT"
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: ${{ steps.last-commit-message.outputs.message }}
           commit_options: --amend --no-edit
