@@ -356,10 +356,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node16@npm:16.1.0":
-  version: 16.1.0
-  resolution: "@tsconfig/node16@npm:16.1.0"
-  checksum: a0a176492e3802a5340eda1e61eabc8d4767e46496bc080ce9c381993ce8c5fb3df8f65267c3a9af4335bc00a85028845f795ea27545f63d62b93ab6675cf8fa
+"@tsconfig/node16@npm:16.1.1":
+  version: 16.1.1
+  resolution: "@tsconfig/node16@npm:16.1.1"
+  checksum: 26d83db06866083b543e73eda33585464362fd0835229b9a5b1185f0353b9b5db9ca4f66a4be53d4ec5d4c219be42b0a7582f8bcc7268f2f77b1c643375e490f
   languageName: node
   linkType: hard
 
@@ -1650,7 +1650,7 @@ __metadata:
     "@actions/exec": 1.1.1
     "@actions/github": 5.1.1
     "@actions/tool-cache": 2.0.1
-    "@tsconfig/node16": 16.1.0
+    "@tsconfig/node16": 16.1.1
     "@tsconfig/strictest": 2.0.1
     "@types/node": 20.5.1
     "@types/semver": 7.5.0
