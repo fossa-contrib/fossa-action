@@ -9,7 +9,7 @@
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
     "typecheck": "tsc",
-    "lint": "eslint \"**/*.ts\" --cache",
+    "lint": "eslint .",
     "build": "ncc build src/index.ts --license=LICENSE.txt"
   },
   "dependencies": {
