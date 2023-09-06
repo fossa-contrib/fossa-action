@@ -19891,6 +19891,275 @@ try {
 
 /***/ }),
 
+/***/ 2176:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.analyze = void 0;
+const exec_1 = __nccwpck_require__(1514);
+const constants_1 = __nccwpck_require__(9042);
+function getArguments() {
+    const arguments_ = [];
+    if (constants_1.ENDPOINT) {
+        arguments_.push("--endpoint", constants_1.ENDPOINT);
+    }
+    return arguments_;
+}
+async function analyze() {
+    const arguments_ = getArguments();
+    const PATH = process.env["PATH"] ?? "";
+    const options = { env: { ...process.env, PATH, FOSSA_API_KEY: constants_1.FOSSA_API_KEY } };
+    await (0, exec_1.exec)("fossa", ["analyze", ...arguments_], options);
+    if (!constants_1.SKIP_TEST) {
+        await (0, exec_1.exec)("fossa", ["test", ...arguments_], options);
+    }
+}
+exports.analyze = analyze;
+
+
+/***/ }),
+
+/***/ 9042:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SKIP_TEST = exports.ENDPOINT = exports.GITHUB_TOKEN = exports.FOSSA_API_KEY = exports.Platform = exports.Architecture = void 0;
+const core = __importStar(__nccwpck_require__(2186));
+var Architecture;
+(function (Architecture) {
+    Architecture["X64"] = "amd64";
+})(Architecture || (exports.Architecture = Architecture = {}));
+var Platform;
+(function (Platform) {
+    Platform["Darwin"] = "darwin";
+    Platform["Linux"] = "linux";
+    Platform["Win32"] = "windows";
+})(Platform || (exports.Platform = Platform = {}));
+exports.FOSSA_API_KEY = core.getInput("fossa-api-key");
+exports.GITHUB_TOKEN = core.getInput("github-token");
+exports.ENDPOINT = core.getInput("endpoint");
+exports.SKIP_TEST = core.getBooleanInput("skip-test");
+
+
+/***/ }),
+
+/***/ 6144:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+const github = __importStar(__nccwpck_require__(5438));
+const analyze_1 = __nccwpck_require__(2176);
+const constants_1 = __nccwpck_require__(9042);
+const installer_1 = __nccwpck_require__(2574);
+const { eventName } = github.context;
+async function run() {
+    try {
+        await (0, installer_1.acquireFossaCli)();
+        await (0, analyze_1.analyze)();
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            const isEmpty = constants_1.FOSSA_API_KEY.length === 0;
+            if (eventName === "pull_request" && isEmpty) {
+                core.warning("You can not use secrets on the pull request event. If you are using them together, see the documentation: https://github.com/fossa-contrib/fossa-action#push-only-api-token");
+            }
+            core.setFailed(error.message);
+        }
+    }
+}
+// eslint-disable-next-line unicorn/prefer-top-level-await
+void run();
+
+
+/***/ }),
+
+/***/ 2574:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.acquireFossaCli = void 0;
+const core = __importStar(__nccwpck_require__(2186));
+const github = __importStar(__nccwpck_require__(5438));
+const tc = __importStar(__nccwpck_require__(7784));
+const semver = __importStar(__nccwpck_require__(1383));
+const constants_1 = __nccwpck_require__(9042);
+const system_1 = __nccwpck_require__(5632);
+const octokit = github.getOctokit(constants_1.GITHUB_TOKEN);
+async function getLatestRelease() {
+    const { data: { assets, tag_name: version }, } = await octokit.rest.repos.getLatestRelease({
+        owner: "fossas",
+        repo: "fossa-cli",
+    });
+    const platform = (0, system_1.getPlatform)();
+    const architecture = (0, system_1.getArchitecture)();
+    const cleanVersion = semver.clean(version) ?? version;
+    const fname = `fossa_${cleanVersion}_${platform}_${architecture}.zip`;
+    const assetIndex = assets.findIndex((asset) => asset.browser_download_url.endsWith(fname));
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { browser_download_url: browserDownloadUrl } = assets[assetIndex];
+    return { version, browserDownloadUrl };
+}
+async function acquireFossaCli() {
+    const { browserDownloadUrl, version } = await getLatestRelease();
+    const platform = (0, system_1.getPlatform)();
+    const cachedPath = tc.find("fossa-cli", version, platform);
+    if (cachedPath === "") {
+        const downloadedPath = await tc.downloadTool(browserDownloadUrl);
+        const extractedPath = await tc.extractZip(downloadedPath);
+        const cachedPath = await tc.cacheDir(extractedPath, "fossa-cli", version, platform);
+        core.addPath(cachedPath);
+    }
+    else {
+        core.addPath(cachedPath);
+    }
+}
+exports.acquireFossaCli = acquireFossaCli;
+
+
+/***/ }),
+
+/***/ 5632:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getPlatform = exports.getArchitecture = void 0;
+const os = __importStar(__nccwpck_require__(612));
+const constants_1 = __nccwpck_require__(9042);
+function getArchitecture() {
+    switch (os.arch()) {
+        case "x64": {
+            return constants_1.Architecture.X64;
+        }
+        default: {
+            throw new Error("The architecture is not supported.");
+        }
+    }
+}
+exports.getArchitecture = getArchitecture;
+function getPlatform() {
+    switch (os.platform()) {
+        case "darwin": {
+            return constants_1.Platform.Darwin;
+        }
+        case "linux": {
+            return constants_1.Platform.Linux;
+        }
+        case "win32": {
+            return constants_1.Platform.Win32;
+        }
+        default: {
+            throw new Error("The platform is not supported.");
+        }
+    }
+}
+exports.getPlatform = getPlatform;
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -19960,6 +20229,14 @@ module.exports = require("https");
 
 "use strict";
 module.exports = require("net");
+
+/***/ }),
+
+/***/ 612:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("node:os");
 
 /***/ }),
 
@@ -20148,172 +20425,17 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__nccwpck_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-// ESM COMPAT FLAG
-__nccwpck_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(2186);
-// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
-var github = __nccwpck_require__(5438);
-// EXTERNAL MODULE: ./node_modules/@actions/exec/lib/exec.js
-var exec = __nccwpck_require__(1514);
-;// CONCATENATED MODULE: ./src/constants.ts
-
-var Architecture;
-(function (Architecture) {
-    Architecture["X64"] = "amd64";
-})(Architecture || (Architecture = {}));
-var Platform;
-(function (Platform) {
-    Platform["Darwin"] = "darwin";
-    Platform["Linux"] = "linux";
-    Platform["Win32"] = "windows";
-})(Platform || (Platform = {}));
-const FOSSA_API_KEY = core.getInput("fossa-api-key");
-const GITHUB_TOKEN = core.getInput("github-token");
-const ENDPOINT = core.getInput("endpoint");
-const SKIP_TEST = core.getBooleanInput("skip-test");
-
-;// CONCATENATED MODULE: ./src/analyze.ts
-
-
-function getArguments() {
-    const arguments_ = [];
-    if (ENDPOINT) {
-        arguments_.push("--endpoint", ENDPOINT);
-    }
-    return arguments_;
-}
-async function analyze() {
-    const arguments_ = getArguments();
-    const PATH = process.env["PATH"] ?? "";
-    const options = { env: { ...process.env, PATH, FOSSA_API_KEY: FOSSA_API_KEY } };
-    await (0,exec.exec)("fossa", ["analyze", ...arguments_], options);
-    if (!SKIP_TEST) {
-        await (0,exec.exec)("fossa", ["test", ...arguments_], options);
-    }
-}
-
-// EXTERNAL MODULE: ./node_modules/@actions/tool-cache/lib/tool-cache.js
-var tool_cache = __nccwpck_require__(7784);
-// EXTERNAL MODULE: ./node_modules/semver/index.js
-var semver = __nccwpck_require__(1383);
-;// CONCATENATED MODULE: external "node:os"
-const external_node_os_namespaceObject = require("node:os");
-;// CONCATENATED MODULE: ./src/system.ts
-
-
-function getArchitecture() {
-    switch (external_node_os_namespaceObject.arch()) {
-        case "x64": {
-            return Architecture.X64;
-        }
-        default: {
-            throw new Error("The architecture is not supported.");
-        }
-    }
-}
-function getPlatform() {
-    switch (external_node_os_namespaceObject.platform()) {
-        case "darwin": {
-            return Platform.Darwin;
-        }
-        case "linux": {
-            return Platform.Linux;
-        }
-        case "win32": {
-            return Platform.Win32;
-        }
-        default: {
-            throw new Error("The platform is not supported.");
-        }
-    }
-}
-
-;// CONCATENATED MODULE: ./src/installer.ts
-
-
-
-
-
-
-const octokit = github.getOctokit(GITHUB_TOKEN);
-async function getLatestRelease() {
-    const { data: { assets, tag_name: version }, } = await octokit.rest.repos.getLatestRelease({
-        owner: "fossas",
-        repo: "fossa-cli",
-    });
-    const platform = getPlatform();
-    const architecture = getArchitecture();
-    const cleanVersion = semver.clean(version) ?? version;
-    const fname = `fossa_${cleanVersion}_${platform}_${architecture}.zip`;
-    const assetIndex = assets.findIndex((asset) => asset.browser_download_url.endsWith(fname));
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { browser_download_url: browserDownloadUrl } = assets[assetIndex];
-    return { version, browserDownloadUrl };
-}
-async function acquireFossaCli() {
-    const { browserDownloadUrl, version } = await getLatestRelease();
-    const platform = getPlatform();
-    const cachedPath = tool_cache.find("fossa-cli", version, platform);
-    if (cachedPath === "") {
-        const downloadedPath = await tool_cache.downloadTool(browserDownloadUrl);
-        const extractedPath = await tool_cache.extractZip(downloadedPath);
-        const cachedPath = await tool_cache.cacheDir(extractedPath, "fossa-cli", version, platform);
-        core.addPath(cachedPath);
-    }
-    else {
-        core.addPath(cachedPath);
-    }
-}
-
-;// CONCATENATED MODULE: ./src/index.ts
-
-
-
-
-
-const { eventName } = github.context;
-async function run() {
-    try {
-        await acquireFossaCli();
-        await analyze();
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            const isEmpty = FOSSA_API_KEY.length === 0;
-            if (eventName === "pull_request" && isEmpty) {
-                core.warning("You can not use secrets on the pull request event. If you are using them together, see the documentation: https://github.com/fossa-contrib/fossa-action#push-only-api-token");
-            }
-            core.setFailed(error.message);
-        }
-    }
-}
-// eslint-disable-next-line unicorn/prefer-top-level-await
-void run();
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(6144);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
