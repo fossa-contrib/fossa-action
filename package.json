@@ -24,7 +24,7 @@
     "@tsconfig/node16": "16.1.1",
     "@tsconfig/strictest": "2.0.2",
     "@types/node": "20.6.5",
-    "@types/semver": "7.5.2",
+    "@types/semver": "7.5.3",
     "@typescript-eslint/eslint-plugin": "6.7.2",
     "@typescript-eslint/parser": "6.7.2",
     "eslint": "8.50.0",
