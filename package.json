@@ -6,8 +6,8 @@
   "author": "Sora Morimoto <sora@morimoto.io>",
   "license": "ISC",
   "scripts": {
-    "fmt": "prettier --write .",
-    "fmt:check": "prettier --check .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "tsc",
     "lint": "eslint .",
     "build": "ncc build src/index.ts --license=LICENSE.txt"
@@ -40,5 +40,5 @@
   "resolutions": {
     "tsconfig-paths": "4.2.0"
   },
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@4.0.1+sha256.5a9d054e67fbbae8774cd3667736fd74407ffbbb336898523ca1fe87b3fc4ee3"
 }

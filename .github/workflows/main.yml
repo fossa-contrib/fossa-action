@@ -21,17 +21,15 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install npm packages
-        run: yarn install --immutable
+      - run: corepack enable
 
-      - name: Check formatting
-        run: yarn fmt:check
+      - run: yarn install --immutable
 
-      - name: Check lint
-        run: yarn lint
+      - run: yarn format:check
 
-      - name: Check type
-        run: yarn typecheck
+      - run: yarn lint
+
+      - run: yarn typecheck
 
       - name: Ensure dist directory is up-to-date
         if: runner.os == 'Linux'
@@ -89,11 +87,11 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install npm packages
-        run: yarn install --immutable
+      - run: corepack enable
 
-      - name: Run build
-        run: yarn build
+      - run: yarn install --immutable
+
+      - run: yarn build
 
       - name: Get last commit message
         id: last-commit-message
