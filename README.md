@@ -30,7 +30,7 @@ There is no problem with this:
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v2
+  uses: fossa-contrib/fossa-action@v3
   with:
     fossa-api-key: abcdefghijklmnopqrstuvwxyz
   #                ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -40,7 +40,7 @@ This will cause an error on the pull request event:
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v2
+  uses: fossa-contrib/fossa-action@v3
   with:
     fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
   #                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -48,8 +48,8 @@ This will cause an error on the pull request event:
 
 #### References
 
-- https://docs.fossa.com/docs/api-reference#push-only-api-token
-- https://securitylab.github.com/research/github-actions-preventing-pwn-requests
+- <https://docs.fossa.com/docs/api-reference#push-only-api-token>
+- <https://securitylab.github.com/research/github-actions-preventing-pwn-requests>
 
 ### How to specify the version
 
@@ -58,7 +58,7 @@ specify the version of the action _itself_.
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v2
+  uses: fossa-contrib/fossa-action@v3
   #                               ^^^
   with:
     fossa-api-key: abcdefghijklmnopqrstuvwxyz
@@ -72,11 +72,11 @@ workflow when we publish a breaking update and increase the major version.
 ```yml
 steps:
   # Reference the major version of a release (most recommended)
-  - uses: fossa-contrib/fossa-action@v2
+  - uses: fossa-contrib/fossa-action@v3
   # Reference a specific commit (most strict)
-  - uses: fossa-contrib/fossa-action@6728dc6
+  - uses: fossa-contrib/fossa-action@cdc5065
   # Reference a semver version of a release (not recommended)
-  - uses: fossa-contrib/fossa-action@v2.0.0
+  - uses: fossa-contrib/fossa-action@v3.0.0
   # Reference a branch (most dangerous)
   - uses: fossa-contrib/fossa-action@master
 ```
@@ -96,10 +96,10 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run FOSSA scan and upload build data
-        uses: fossa-contrib/fossa-action@v2
+        uses: fossa-contrib/fossa-action@v3
         with:
           fossa-api-key: abcdefghijklmnopqrstuvwxyz
 ```
