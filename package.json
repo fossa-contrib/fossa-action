@@ -21,7 +21,7 @@
     "semver": "7.5.4"
   },
   "devDependencies": {
-    "@tsconfig/node16": "16.1.1",
+    "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
     "@types/node": "20.9.4",
     "@types/semver": "7.5.6",
