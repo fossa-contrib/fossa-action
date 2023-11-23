@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [unreleased]
 
+## [3.0.0] - 2023-11-24
+
+### Changed
+
+- Update default runtime to node20.
+
 ## [2.0.0] - 2023-02-14
 
 ### Changed
@@ -79,7 +85,8 @@ and this project adheres to
 - Initial release.
 
 [unreleased]:
-  https://github.com/fossa-contrib/fossa-action/compare/v1.2.0...HEAD
+  https://github.com/fossa-contrib/fossa-action/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/fossa-contrib/fossa-action/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/fossa-contrib/fossa-action/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.5...v1.2.0
 [1.1.5]: https://github.com/fossa-contrib/fossa-action/compare/v1.1.4...v1.1.5
