@@ -5,7 +5,8 @@
     "@tsconfig/node20/tsconfig.json"
   ],
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    "noPropertyAccessFromIndexSignature": false
   },
   "exclude": ["dist", "node_modules"]
 }

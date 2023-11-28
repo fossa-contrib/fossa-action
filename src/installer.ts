@@ -24,7 +24,7 @@ async function getLatestRelease() {
   const assetIndex = assets.findIndex((asset) =>
     asset.browser_download_url.endsWith(fname),
   );
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  // biome-ignore lint/style/noNonNullAssertion: <explanation>
   const { browser_download_url: browserDownloadUrl } = assets[assetIndex]!;
 
   return { version, browserDownloadUrl };

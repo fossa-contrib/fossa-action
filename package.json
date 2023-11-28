@@ -6,10 +6,10 @@
   "author": "Sora Morimoto <sora@morimoto.io>",
   "license": "ISC",
   "scripts": {
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
     "typecheck": "tsc",
-    "lint": "eslint .",
+    "lint": "biome lint .",
     "build": "ncc build src/index.ts --license=LICENSE.txt"
   },
   "dependencies": {
@@ -21,20 +21,11 @@
     "semver": "7.5.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.4.0",
     "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
     "@types/node": "20.10.0",
     "@types/semver": "7.5.6",
-    "@typescript-eslint/eslint-plugin": "6.13.1",
-    "@typescript-eslint/parser": "6.13.1",
-    "eslint": "8.54.0",
-    "eslint-config-prettier": "9.0.0",
-    "eslint-import-resolver-typescript": "3.6.1",
-    "eslint-plugin-import": "2.29.0",
-    "eslint-plugin-prettier": "5.0.1",
-    "eslint-plugin-simple-import-sort": "10.0.0",
-    "eslint-plugin-unicorn": "49.0.0",
-    "prettier": "3.1.0",
     "typescript": "5.3.2"
   },
   "resolutions": {
