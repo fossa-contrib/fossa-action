@@ -67,16 +67,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/biome@npm:1.4.0"
+"@biomejs/biome@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/biome@npm:1.4.1"
   dependencies:
-    "@biomejs/cli-darwin-arm64": "npm:1.4.0"
-    "@biomejs/cli-darwin-x64": "npm:1.4.0"
-    "@biomejs/cli-linux-arm64": "npm:1.4.0"
-    "@biomejs/cli-linux-x64": "npm:1.4.0"
-    "@biomejs/cli-win32-arm64": "npm:1.4.0"
-    "@biomejs/cli-win32-x64": "npm:1.4.0"
+    "@biomejs/cli-darwin-arm64": "npm:1.4.1"
+    "@biomejs/cli-darwin-x64": "npm:1.4.1"
+    "@biomejs/cli-linux-arm64": "npm:1.4.1"
+    "@biomejs/cli-linux-x64": "npm:1.4.1"
+    "@biomejs/cli-win32-arm64": "npm:1.4.1"
+    "@biomejs/cli-win32-x64": "npm:1.4.1"
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -92,48 +92,48 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: a2a8172bbb60d2fe3edc835aaace10d61122cd81f0c511eea37eb1166e5cfa30b5efcd0dad5f3c224fd4420eb6632363545820c3cac5d84944b62fb5517cb668
+  checksum: 11d3a6d0ac0e31c6f5e5e33a46a77b4e1f0846a1d6c023b597a472266e911ce5ad0513b1946eedc37d31547785909c87110e803c69f564a36d4ff045d01ed243
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/cli-darwin-arm64@npm:1.4.0"
+"@biomejs/cli-darwin-arm64@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/cli-darwin-arm64@npm:1.4.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/cli-darwin-x64@npm:1.4.0"
+"@biomejs/cli-darwin-x64@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/cli-darwin-x64@npm:1.4.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/cli-linux-arm64@npm:1.4.0"
+"@biomejs/cli-linux-arm64@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/cli-linux-arm64@npm:1.4.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/cli-linux-x64@npm:1.4.0"
+"@biomejs/cli-linux-x64@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/cli-linux-x64@npm:1.4.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/cli-win32-arm64@npm:1.4.0"
+"@biomejs/cli-win32-arm64@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/cli-win32-arm64@npm:1.4.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@biomejs/cli-win32-x64@npm:1.4.0"
+"@biomejs/cli-win32-x64@npm:1.4.1":
+  version: 1.4.1
+  resolution: "@biomejs/cli-win32-x64@npm:1.4.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -561,7 +561,7 @@ __metadata:
     "@actions/exec": "npm:1.1.1"
     "@actions/github": "npm:6.0.0"
     "@actions/tool-cache": "npm:2.0.1"
-    "@biomejs/biome": "npm:1.4.0"
+    "@biomejs/biome": "npm:1.4.1"
     "@tsconfig/node20": "npm:20.1.2"
     "@tsconfig/strictest": "npm:2.0.2"
     "@types/node": "npm:20.10.1"
