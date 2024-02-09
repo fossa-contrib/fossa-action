@@ -24,7 +24,7 @@
     "@biomejs/biome": "1.5.3",
     "@tsconfig/node20": "20.1.2",
     "@tsconfig/strictest": "2.0.2",
-    "@types/node": "20.11.16",
+    "@types/node": "20.11.17",
     "@types/semver": "7.5.6",
     "typescript": "5.3.3"
   },
