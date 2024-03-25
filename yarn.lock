@@ -319,10 +319,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/strictest@npm:2.0.3":
-  version: 2.0.3
-  resolution: "@tsconfig/strictest@npm:2.0.3"
-  checksum: 10c0/a26be4aed831c59b6b362608f34c6f0b2427dc08031176d825e46079090b9e48aa5ff71647b762a9a7009cb898af9b6cd24a195d268e9486fffa93de99de08c6
+"@tsconfig/strictest@npm:2.0.4":
+  version: 2.0.4
+  resolution: "@tsconfig/strictest@npm:2.0.4"
+  checksum: 10c0/cb5a3a2e4f081266031270babe74ab1814d6688e179c975514172adb24a66e407291b392043fc0b8301dc3dde511cbff52ac63d47b0ef13ad368d923577b1f31
   languageName: node
   linkType: hard
 
@@ -583,7 +583,7 @@ __metadata:
     "@actions/tool-cache": "npm:2.0.1"
     "@biomejs/biome": "npm:1.6.2"
     "@tsconfig/node20": "npm:20.1.2"
-    "@tsconfig/strictest": "npm:2.0.3"
+    "@tsconfig/strictest": "npm:2.0.4"
     "@types/node": "npm:20.11.30"
     "@types/semver": "npm:7.5.8"
     "@vercel/ncc": "npm:0.38.1"
