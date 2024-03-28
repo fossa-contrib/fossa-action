@@ -312,10 +312,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node20@npm:20.1.3":
-  version: 20.1.3
-  resolution: "@tsconfig/node20@npm:20.1.3"
-  checksum: 10c0/619b35b5100fd7e7000aa0ba530c1ac95d1ce89f5cc94590c04a4fc7fcebb72e52cbc2ebd1300b6ba23ac33d74fe5fb559c5f191af45adc2dfbff09c8f0da7ee
+"@tsconfig/node20@npm:20.1.4":
+  version: 20.1.4
+  resolution: "@tsconfig/node20@npm:20.1.4"
+  checksum: 10c0/239cd6abaceaaffc758e7a9dd3748ec1acfdabd6de28a9a16a3824c21f17ad69a16184870298460345d2fb6f3663d092c21d5b764bef669a179658b4a7eac739
   languageName: node
   linkType: hard
 
@@ -582,7 +582,7 @@ __metadata:
     "@actions/github": "npm:6.0.0"
     "@actions/tool-cache": "npm:2.0.1"
     "@biomejs/biome": "npm:1.6.3"
-    "@tsconfig/node20": "npm:20.1.3"
+    "@tsconfig/node20": "npm:20.1.4"
     "@tsconfig/strictest": "npm:2.0.4"
     "@types/node": "npm:20.11.30"
     "@types/semver": "npm:7.5.8"
