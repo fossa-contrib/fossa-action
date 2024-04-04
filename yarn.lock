@@ -180,15 +180,15 @@ __metadata:
   linkType: hard
 
 "@npmcli/agent@npm:^2.0.0":
-  version: 2.2.1
-  resolution: "@npmcli/agent@npm:2.2.1"
+  version: 2.2.2
+  resolution: "@npmcli/agent@npm:2.2.2"
   dependencies:
     agent-base: "npm:^7.1.0"
     http-proxy-agent: "npm:^7.0.0"
     https-proxy-agent: "npm:^7.0.1"
     lru-cache: "npm:^10.0.1"
-    socks-proxy-agent: "npm:^8.0.1"
-  checksum: 10c0/38ee5cbe8f3cde13be916e717bfc54fd1a7605c07af056369ff894e244c221e0b56b08ca5213457477f9bc15bca9e729d51a4788829b5c3cf296b3c996147f76
+    socks-proxy-agent: "npm:^8.0.3"
+  checksum: 10c0/325e0db7b287d4154ecd164c0815c08007abfb07653cc57bceded17bb7fd240998a3cbdbe87d700e30bef494885eccc725ab73b668020811d56623d145b524ae
   languageName: node
   linkType: hard
 
@@ -1038,7 +1038,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"socks-proxy-agent@npm:^8.0.1":
+"socks-proxy-agent@npm:^8.0.3":
   version: 8.0.3
   resolution: "socks-proxy-agent@npm:8.0.3"
   dependencies:
@@ -1164,11 +1164,11 @@ __metadata:
   linkType: hard
 
 "undici@npm:^5.25.4":
-  version: 5.28.3
-  resolution: "undici@npm:5.28.3"
+  version: 5.28.4
+  resolution: "undici@npm:5.28.4"
   dependencies:
     "@fastify/busboy": "npm:^2.0.0"
-  checksum: 10c0/3c559ae50ef3104b7085251445dda6f4de871553b9e290845649d2f80b06c0c9cfcdf741b0029c6b20d36c82e6a74dc815b139fa9a26757d70728074ca6d6f5c
+  checksum: 10c0/08d0f2596553aa0a54ca6e8e9c7f45aef7d042c60918564e3a142d449eda165a80196f6ef19ea2ef2e6446959e293095d8e40af1236f0d67223b06afac5ecad7
   languageName: node
   linkType: hard
 
