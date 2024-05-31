@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Set-up Node.js LTS
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
@@ -49,7 +49,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Run FOSSA scan and upload build data
         uses: ./
@@ -65,7 +65,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
         with:
           fetch-depth: 2
           ref: ${{ github.head_ref }}
