@@ -35591,7 +35591,7 @@ function wrappy (fn, cb) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.analyze = void 0;
+exports.analyze = analyze;
 const exec_1 = __nccwpck_require__(1514);
 const constants_1 = __nccwpck_require__(9042);
 function getArguments() {
@@ -35610,7 +35610,6 @@ async function analyze() {
         await (0, exec_1.exec)("fossa", ["test", ...arguments_], options);
     }
 }
-exports.analyze = analyze;
 
 
 /***/ }),
@@ -35749,7 +35748,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.acquireFossaCli = void 0;
+exports.acquireFossaCli = acquireFossaCli;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const tc = __importStar(__nccwpck_require__(7784));
@@ -35785,7 +35784,6 @@ async function acquireFossaCli() {
         core.addPath(cachedPath);
     }
 }
-exports.acquireFossaCli = acquireFossaCli;
 
 
 /***/ }),
@@ -35819,7 +35817,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getPlatform = exports.getArchitecture = void 0;
+exports.getArchitecture = getArchitecture;
+exports.getPlatform = getPlatform;
 const os = __importStar(__nccwpck_require__(612));
 const constants_1 = __nccwpck_require__(9042);
 function getArchitecture() {
@@ -35832,7 +35831,6 @@ function getArchitecture() {
         }
     }
 }
-exports.getArchitecture = getArchitecture;
 function getPlatform() {
     switch (os.platform()) {
         case "darwin": {
@@ -35849,7 +35847,6 @@ function getPlatform() {
         }
     }
 }
-exports.getPlatform = getPlatform;
 
 
 /***/ }),
