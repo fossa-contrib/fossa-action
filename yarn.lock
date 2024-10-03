@@ -5,17 +5,17 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@actions/core@npm:1.10.1, @actions/core@npm:^1.2.6":
-  version: 1.10.1
-  resolution: "@actions/core@npm:1.10.1"
+"@actions/core@npm:1.11.0, @actions/core@npm:^1.2.6":
+  version: 1.11.0
+  resolution: "@actions/core@npm:1.11.0"
   dependencies:
+    "@actions/exec": "npm:^1.1.1"
     "@actions/http-client": "npm:^2.0.1"
-    uuid: "npm:^8.3.2"
-  checksum: 10c0/7a61446697a23dcad3545cf0634dedbdedf20ae9a0ee6ee977554589a15deb4a93593ee48a41258933d58ce0778f446b0d2c162b60750956fb75e0b9560fb832
+  checksum: 10c0/54763ea46ce7a2a390c56819c94426fc24305547f56e80c5ef39f3a2b6ef1fcff3774635c73f792b17b88deb3bb71f79cc6deafe9fc2820602ed166ceb48221b
   languageName: node
   linkType: hard
 
-"@actions/exec@npm:1.1.1, @actions/exec@npm:^1.0.0":
+"@actions/exec@npm:1.1.1, @actions/exec@npm:^1.0.0, @actions/exec@npm:^1.1.1":
   version: 1.1.1
   resolution: "@actions/exec@npm:1.1.1"
   dependencies:
@@ -593,7 +593,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fossa-action@workspace:."
   dependencies:
-    "@actions/core": "npm:1.10.1"
+    "@actions/core": "npm:1.11.0"
     "@actions/exec": "npm:1.1.1"
     "@actions/github": "npm:6.0.0"
     "@actions/tool-cache": "npm:2.0.1"
@@ -1217,15 +1217,6 @@ __metadata:
   bin:
     uuid: ./bin/uuid
   checksum: 10c0/1c13950df865c4f506ebfe0a24023571fa80edf2e62364297a537c80af09c618299797bbf2dbac6b1f8ae5ad182ba474b89db61e0e85839683991f7e08795347
-  languageName: node
-  linkType: hard
-
-"uuid@npm:^8.3.2":
-  version: 8.3.2
-  resolution: "uuid@npm:8.3.2"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: 10c0/bcbb807a917d374a49f475fae2e87fdca7da5e5530820ef53f65ba1d12131bd81a92ecf259cc7ce317cbe0f289e7d79fdfebcef9bfa3087c8c8a2fa304c9be54
   languageName: node
   linkType: hard
 
