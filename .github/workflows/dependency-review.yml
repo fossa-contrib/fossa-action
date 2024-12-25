@@ -8,9 +8,6 @@ jobs:
   dependency-review:
     name: Dependency Review
 
-    permissions:
-      contents: read
-
     runs-on: ubuntu-latest
 
     steps:

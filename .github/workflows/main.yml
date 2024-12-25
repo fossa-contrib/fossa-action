@@ -61,6 +61,9 @@ jobs:
 
     if: ${{ github.event_name == 'pull_request' && github.actor == 'renovate[bot]' }}
 
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
 
     steps:
@@ -69,8 +72,6 @@ jobs:
         with:
           fetch-depth: 2
           ref: ${{ github.head_ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          token: ${{ secrets.PAT }}
 
       - name: Set-up Node.js LTS
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
