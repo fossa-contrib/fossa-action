@@ -35238,7 +35238,9 @@ async function getLatestRelease() {
     const cleanVersion = semver.clean(version) ?? version;
     const fname = `fossa_${cleanVersion}_${platform}_${architecture}.zip`;
     const assetIndex = assets.findIndex((asset) => asset.browser_download_url.endsWith(fname));
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    if (assetIndex === -1 || !assets[assetIndex]) {
+        throw new Error(`Could not find asset with filename ${fname}`);
+    }
     const { browser_download_url: browserDownloadUrl } = assets[assetIndex];
     return { version, browserDownloadUrl };
 }
