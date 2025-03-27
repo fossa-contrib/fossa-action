@@ -25,7 +25,7 @@
     "@tsconfig/node20": "20.1.5",
     "@tsconfig/strictest": "2.0.5",
     "@types/node": "22.13.13",
-    "@types/semver": "7.5.8",
+    "@types/semver": "7.7.0",
     "typescript": "5.8.2"
   },
   "packageManager": "yarn@4.7.0"
