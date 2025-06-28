@@ -353,12 +353,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:24.0.4":
-  version: 24.0.4
-  resolution: "@types/node@npm:24.0.4"
+"@types/node@npm:24.0.6":
+  version: 24.0.6
+  resolution: "@types/node@npm:24.0.6"
   dependencies:
     undici-types: "npm:~7.8.0"
-  checksum: 10c0/590e8cb0ec59fb9cd566402120e690d87ecbdf57f1ee2b8493266121ed33aa4b25949a0c6156b84a6ffb9250baaf1f80e9af142da542ed603e6ee73fc4d1115f
+  checksum: 10c0/17f976364358f85294912e04f0de147da6ba5ce3fe495b758df58458241f110475905cd0bb4ace373e9c44a0a7927202043bf0501cc1f7644306bde310c62650
   languageName: node
   linkType: hard
 
@@ -604,7 +604,7 @@ __metadata:
     "@biomejs/biome": "npm:2.0.5"
     "@tsconfig/node20": "npm:20.1.6"
     "@tsconfig/strictest": "npm:2.0.5"
-    "@types/node": "npm:24.0.4"
+    "@types/node": "npm:24.0.6"
     "@types/semver": "npm:7.7.0"
     "@vercel/ncc": "npm:0.38.3"
     semver: "npm:7.7.2"
