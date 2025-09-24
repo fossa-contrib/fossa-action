@@ -28,5 +28,5 @@
     "@types/semver": "7.7.1",
     "typescript": "5.9.2"
   },
-  "packageManager": "yarn@4.10.0"
+  "packageManager": "yarn@4.10.3"
 }
