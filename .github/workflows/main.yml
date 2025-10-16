@@ -20,8 +20,7 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           check-latest: true
-          node-version: lts/*
-          package-manager-cache: false
+          node-version-file: .nvmrc
 
       - run: corepack enable
 
@@ -79,8 +78,7 @@ jobs:
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           check-latest: true
-          node-version: lts/*
-          package-manager-cache: false
+          node-version-file: .nvmrc
 
       - run: corepack enable
 
