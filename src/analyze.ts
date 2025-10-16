@@ -14,8 +14,18 @@ export async function analyze(): Promise<void> {
   const arguments_ = getArguments();
   const PATH = process.env.PATH ?? "";
   const options = { env: { ...process.env, PATH, FOSSA_API_KEY } };
-  await exec("fossa", ["analyze", ...arguments_], options);
+  await exec(
+    "fossa",
+    ["analyze", ...arguments_],
+    // @ts-expect-error: process.env may contain undefined values
+    options,
+  );
   if (!SKIP_TEST) {
-    await exec("fossa", ["test", ...arguments_], options);
+    await exec(
+      "fossa",
+      ["test", ...arguments_],
+      // @ts-expect-error: process.env may contain undefined values
+      options,
+    );
   }
 }

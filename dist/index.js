@@ -35210,9 +35210,13 @@ async function analyze() {
     const arguments_ = getArguments();
     const PATH = process.env.PATH ?? "";
     const options = { env: { ...process.env, PATH, FOSSA_API_KEY: constants_1.FOSSA_API_KEY } };
-    await (0, exec_1.exec)("fossa", ["analyze", ...arguments_], options);
+    await (0, exec_1.exec)("fossa", ["analyze", ...arguments_], 
+    // @ts-expect-error: process.env may contain undefined values
+    options);
     if (!constants_1.SKIP_TEST) {
-        await (0, exec_1.exec)("fossa", ["test", ...arguments_], options);
+        await (0, exec_1.exec)("fossa", ["test", ...arguments_], 
+        // @ts-expect-error: process.env may contain undefined values
+        options);
     }
 }
 
