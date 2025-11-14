@@ -16,13 +16,10 @@ jobs:
       - name: Checkout tree
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
-      - name: Set-up Node.js LTS
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      - name: Set-up Mise
+        uses: jdx/mise-action@9dc7d5dd454262207dea3ab5a06a3df6afc8ff26 # v3.4.1
         with:
-          check-latest: true
-          node-version-file: .nvmrc
-
-      - run: corepack enable
+          cache: false
 
       - run: yarn install --immutable
 
@@ -74,13 +71,10 @@ jobs:
           fetch-depth: 2
           ref: ${{ github.head_ref }}
 
-      - name: Set-up Node.js LTS
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+      - name: Set-up Mise
+        uses: jdx/mise-action@9dc7d5dd454262207dea3ab5a06a3df6afc8ff26 # v3.4.1
         with:
-          check-latest: true
-          node-version-file: .nvmrc
-
-      - run: corepack enable
+          cache: false
 
       - run: yarn install --immutable
 
