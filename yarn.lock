@@ -5,13 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@actions/core@npm:2.0.2, @actions/core@npm:^2.0.1":
-  version: 2.0.2
-  resolution: "@actions/core@npm:2.0.2"
+"@actions/core@npm:2.0.3, @actions/core@npm:^2.0.1":
+  version: 2.0.3
+  resolution: "@actions/core@npm:2.0.3"
   dependencies:
     "@actions/exec": "npm:^2.0.0"
-    "@actions/http-client": "npm:^3.0.1"
-  checksum: 10c0/933b03d4aacafc9337b493e7e689376ed1d9e824b37f6c8e008668c75dda3add6ff28c61f4e498831e37229f140d20a37f457de9f5089eca7455f603ad59a945
+    "@actions/http-client": "npm:^3.0.2"
+  checksum: 10c0/aaee1cf8a43ef07549ef7959d66cce85ffc254e3ceb893735b463c73c042596825d5ada067fe513e276da7dc75e78cc4de971748249ace17df7e232fa8081f07
   languageName: node
   linkType: hard
 
@@ -487,7 +487,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "fossa-action@workspace:."
   dependencies:
-    "@actions/core": "npm:2.0.2"
+    "@actions/core": "npm:2.0.3"
     "@actions/exec": "npm:2.0.0"
     "@actions/github": "npm:7.0.0"
     "@actions/tool-cache": "npm:3.0.1"
