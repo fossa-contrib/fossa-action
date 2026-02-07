@@ -21,19 +21,19 @@ jobs:
         with:
           cache: false
 
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
 
-      - run: yarn format:check
+      - run: bun run format:check
 
-      - run: yarn lint
+      - run: bun run lint
 
-      - run: yarn type-check
+      - run: bun run type-check
 
       - name: Ensure dist directory is up-to-date
         if: runner.os == 'Linux'
         shell: bash
         run: |
-          yarn build
+          bun run build
           if [ "$(git status dist --porcelain | wc -l)" -gt "0" ]; then
             echo "Detected uncommitted changes after build. See status below:"
             git diff
@@ -76,9 +76,9 @@ jobs:
         with:
           cache: false
 
-      - run: yarn install --immutable
+      - run: bun install --frozen-lockfile
 
-      - run: yarn build
+      - run: bun run build
 
       - name: Get last commit message
         id: last-commit-message
