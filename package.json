@@ -6,7 +6,7 @@
   "license": "ISC",
   "author": "Sora Morimoto <sora@morimoto.io>",
   "scripts": {
-    "build": "ncc build src/index.ts --license=LICENSE.txt",
+    "build": "esbuild --bundle --format=cjs --outfile=dist/index.js --platform=node --target=node24 src/index.ts",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "lint": "biome lint .",
@@ -17,7 +17,6 @@
     "@actions/exec": "2.0.0",
     "@actions/github": "7.0.0",
     "@actions/tool-cache": "3.0.1",
-    "@vercel/ncc": "0.38.4",
     "semver": "7.7.4"
   },
   "devDependencies": {
@@ -26,7 +25,7 @@
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.10.11",
     "@types/semver": "7.7.1",
+    "esbuild": "0.27.3",
     "typescript": "5.9.3"
-  },
-  "packageManager": "yarn@4.12.0"
+  }
 }
