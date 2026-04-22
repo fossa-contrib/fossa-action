@@ -128,7 +128,7 @@ var require_tunnel = __commonJS({
         connectOptions.headers = connectOptions.headers || {};
         connectOptions.headers["Proxy-Authorization"] = "Basic " + new Buffer(connectOptions.proxyAuth).toString("base64");
       }
-      debug2("making CONNECT request");
+      debug3("making CONNECT request");
       var connectReq = self.request(connectOptions);
       connectReq.useChunkedEncodingByDefault = false;
       connectReq.once("response", onResponse);
@@ -148,7 +148,7 @@ var require_tunnel = __commonJS({
         connectReq.removeAllListeners();
         socket.removeAllListeners();
         if (res.statusCode !== 200) {
-          debug2(
+          debug3(
             "tunneling socket could not be established, statusCode=%d",
             res.statusCode
           );
@@ -160,7 +160,7 @@ var require_tunnel = __commonJS({
           return;
         }
         if (head.length > 0) {
-          debug2("got illegal response body from proxy");
+          debug3("got illegal response body from proxy");
           socket.destroy();
           var error2 = new Error("got illegal response body from proxy");
           error2.code = "ECONNRESET";
@@ -168,13 +168,13 @@ var require_tunnel = __commonJS({
           self.removeSocket(placeholder);
           return;
         }
-        debug2("tunneling connection has established");
+        debug3("tunneling connection has established");
         self.sockets[self.sockets.indexOf(placeholder)] = socket;
         return cb(socket);
       }
       function onError(cause) {
         connectReq.removeAllListeners();
-        debug2(
+        debug3(
           "tunneling socket could not be established, cause=%s\n",
           cause.message,
           cause.stack
@@ -236,9 +236,9 @@ var require_tunnel = __commonJS({
       }
       return target;
     }
-    var debug2;
+    var debug3;
     if (process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)) {
-      debug2 = function() {
+      debug3 = function() {
         var args = Array.prototype.slice.call(arguments);
         if (typeof args[0] === "string") {
           args[0] = "TUNNEL: " + args[0];
@@ -248,10 +248,10 @@ var require_tunnel = __commonJS({
         console.error.apply(console, args);
       };
     } else {
-      debug2 = function() {
+      debug3 = function() {
       };
     }
-    exports2.debug = debug2;
+    exports2.debug = debug3;
   }
 });
 
@@ -5702,7 +5702,7 @@ var require_client_h1 = __commonJS({
       kResume,
       kHTTPContext
     } = require_symbols();
-    var constants3 = require_constants2();
+    var constants4 = require_constants2();
     var EMPTY_BUF = Buffer.alloc(0);
     var FastBuffer = Buffer[Symbol.species];
     var addListener = util2.addListener;
@@ -5774,7 +5774,7 @@ var require_client_h1 = __commonJS({
       constructor(client, socket, { exports: exports3 }) {
         assert(Number.isFinite(client[kMaxHeadersSize]) && client[kMaxHeadersSize] > 0);
         this.llhttp = exports3;
-        this.ptr = this.llhttp.llhttp_alloc(constants3.TYPE.RESPONSE);
+        this.ptr = this.llhttp.llhttp_alloc(constants4.TYPE.RESPONSE);
         this.client = client;
         this.socket = socket;
         this.timeout = null;
@@ -5869,19 +5869,19 @@ var require_client_h1 = __commonJS({
             currentBufferRef = null;
           }
           const offset = llhttp.llhttp_get_error_pos(this.ptr) - currentBufferPtr;
-          if (ret === constants3.ERROR.PAUSED_UPGRADE) {
+          if (ret === constants4.ERROR.PAUSED_UPGRADE) {
             this.onUpgrade(data.slice(offset));
-          } else if (ret === constants3.ERROR.PAUSED) {
+          } else if (ret === constants4.ERROR.PAUSED) {
             this.paused = true;
             socket.unshift(data.slice(offset));
-          } else if (ret !== constants3.ERROR.OK) {
+          } else if (ret !== constants4.ERROR.OK) {
             const ptr = llhttp.llhttp_get_error_reason(this.ptr);
             let message = "";
             if (ptr) {
               const len = new Uint8Array(llhttp.memory.buffer, ptr).indexOf(0);
               message = "Response does not match the HTTP/1.1 protocol (" + Buffer.from(llhttp.memory.buffer, ptr, len).toString() + ")";
             }
-            throw new HTTPParserError(message, constants3.ERROR[ret], data.slice(offset));
+            throw new HTTPParserError(message, constants4.ERROR[ret], data.slice(offset));
           }
         } catch (err) {
           util2.destroy(socket, err);
@@ -6056,7 +6056,7 @@ var require_client_h1 = __commonJS({
           socket[kBlocking] = false;
           client[kResume]();
         }
-        return pause ? constants3.ERROR.PAUSED : 0;
+        return pause ? constants4.ERROR.PAUSED : 0;
       }
       onBody(buf) {
         const { client, socket, statusCode, maxResponseSize } = this;
@@ -6078,7 +6078,7 @@ var require_client_h1 = __commonJS({
         }
         this.bytesRead += buf.length;
         if (request2.onData(buf) === false) {
-          return constants3.ERROR.PAUSED;
+          return constants4.ERROR.PAUSED;
         }
       }
       onMessageComplete() {
@@ -6113,13 +6113,13 @@ var require_client_h1 = __commonJS({
         if (socket[kWriting]) {
           assert(client[kRunning] === 0);
           util2.destroy(socket, new InformationalError("reset"));
-          return constants3.ERROR.PAUSED;
+          return constants4.ERROR.PAUSED;
         } else if (!shouldKeepAlive) {
           util2.destroy(socket, new InformationalError("reset"));
-          return constants3.ERROR.PAUSED;
+          return constants4.ERROR.PAUSED;
         } else if (socket[kReset] && client[kRunning] === 0) {
           util2.destroy(socket, new InformationalError("reset"));
-          return constants3.ERROR.PAUSED;
+          return constants4.ERROR.PAUSED;
         } else if (client[kPipelining] == null || client[kPipelining] === 1) {
           setImmediate(() => client[kResume]());
         } else {
@@ -18750,7 +18750,7 @@ var require_lib = __commonJS({
         return result;
       };
     })();
-    var __awaiter10 = exports2 && exports2.__awaiter || function(thisArg, _arguments, P, generator) {
+    var __awaiter11 = exports2 && exports2.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
         return value instanceof P ? value : new P(function(resolve2) {
           resolve2(value);
@@ -18858,8 +18858,8 @@ var require_lib = __commonJS({
         this.message = message;
       }
       readBody() {
-        return __awaiter10(this, void 0, void 0, function* () {
-          return new Promise((resolve2) => __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
+          return new Promise((resolve2) => __awaiter11(this, void 0, void 0, function* () {
             let output = Buffer.alloc(0);
             this.message.on("data", (chunk) => {
               output = Buffer.concat([output, chunk]);
@@ -18871,8 +18871,8 @@ var require_lib = __commonJS({
         });
       }
       readBodyBuffer() {
-        return __awaiter10(this, void 0, void 0, function* () {
-          return new Promise((resolve2) => __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
+          return new Promise((resolve2) => __awaiter11(this, void 0, void 0, function* () {
             const chunks = [];
             this.message.on("data", (chunk) => {
               chunks.push(chunk);
@@ -18928,42 +18928,42 @@ var require_lib = __commonJS({
         }
       }
       options(requestUrl, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("OPTIONS", requestUrl, null, additionalHeaders || {});
         });
       }
       get(requestUrl, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("GET", requestUrl, null, additionalHeaders || {});
         });
       }
       del(requestUrl, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("DELETE", requestUrl, null, additionalHeaders || {});
         });
       }
       post(requestUrl, data, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("POST", requestUrl, data, additionalHeaders || {});
         });
       }
       patch(requestUrl, data, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("PATCH", requestUrl, data, additionalHeaders || {});
         });
       }
       put(requestUrl, data, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("PUT", requestUrl, data, additionalHeaders || {});
         });
       }
       head(requestUrl, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request("HEAD", requestUrl, null, additionalHeaders || {});
         });
       }
       sendStream(verb, requestUrl, stream2, additionalHeaders) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return this.request(verb, requestUrl, stream2, additionalHeaders);
         });
       }
@@ -18972,14 +18972,14 @@ var require_lib = __commonJS({
        * Be aware that not found returns a null.  Other errors (4xx, 5xx) reject the promise
        */
       getJson(requestUrl_1) {
-        return __awaiter10(this, arguments, void 0, function* (requestUrl, additionalHeaders = {}) {
+        return __awaiter11(this, arguments, void 0, function* (requestUrl, additionalHeaders = {}) {
           additionalHeaders[Headers2.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers2.Accept, MediaTypes2.ApplicationJson);
           const res = yield this.get(requestUrl, additionalHeaders);
           return this._processResponse(res, this.requestOptions);
         });
       }
       postJson(requestUrl_1, obj_1) {
-        return __awaiter10(this, arguments, void 0, function* (requestUrl, obj, additionalHeaders = {}) {
+        return __awaiter11(this, arguments, void 0, function* (requestUrl, obj, additionalHeaders = {}) {
           const data = JSON.stringify(obj, null, 2);
           additionalHeaders[Headers2.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers2.Accept, MediaTypes2.ApplicationJson);
           additionalHeaders[Headers2.ContentType] = this._getExistingOrDefaultContentTypeHeader(additionalHeaders, MediaTypes2.ApplicationJson);
@@ -18988,7 +18988,7 @@ var require_lib = __commonJS({
         });
       }
       putJson(requestUrl_1, obj_1) {
-        return __awaiter10(this, arguments, void 0, function* (requestUrl, obj, additionalHeaders = {}) {
+        return __awaiter11(this, arguments, void 0, function* (requestUrl, obj, additionalHeaders = {}) {
           const data = JSON.stringify(obj, null, 2);
           additionalHeaders[Headers2.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers2.Accept, MediaTypes2.ApplicationJson);
           additionalHeaders[Headers2.ContentType] = this._getExistingOrDefaultContentTypeHeader(additionalHeaders, MediaTypes2.ApplicationJson);
@@ -18997,7 +18997,7 @@ var require_lib = __commonJS({
         });
       }
       patchJson(requestUrl_1, obj_1) {
-        return __awaiter10(this, arguments, void 0, function* (requestUrl, obj, additionalHeaders = {}) {
+        return __awaiter11(this, arguments, void 0, function* (requestUrl, obj, additionalHeaders = {}) {
           const data = JSON.stringify(obj, null, 2);
           additionalHeaders[Headers2.Accept] = this._getExistingOrDefaultHeader(additionalHeaders, Headers2.Accept, MediaTypes2.ApplicationJson);
           additionalHeaders[Headers2.ContentType] = this._getExistingOrDefaultContentTypeHeader(additionalHeaders, MediaTypes2.ApplicationJson);
@@ -19011,7 +19011,7 @@ var require_lib = __commonJS({
        * Prefer get, del, post and patch
        */
       request(verb, requestUrl, data, headers) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           if (this._disposed) {
             throw new Error("Client has already been disposed.");
           }
@@ -19085,7 +19085,7 @@ var require_lib = __commonJS({
        * @param data
        */
       requestRaw(info2, data) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           return new Promise((resolve2, reject) => {
             function callbackForResult(err, res) {
               if (err) {
@@ -19334,15 +19334,15 @@ var require_lib = __commonJS({
         return baseUserAgent;
       }
       _performExponentialBackoff(retryNumber) {
-        return __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
           retryNumber = Math.min(ExponentialBackoffCeiling2, retryNumber);
           const ms = ExponentialBackoffTimeSlice2 * Math.pow(2, retryNumber);
           return new Promise((resolve2) => setTimeout(() => resolve2(), ms));
         });
       }
       _processResponse(res, options) {
-        return __awaiter10(this, void 0, void 0, function* () {
-          return new Promise((resolve2, reject) => __awaiter10(this, void 0, void 0, function* () {
+        return __awaiter11(this, void 0, void 0, function* () {
+          return new Promise((resolve2, reject) => __awaiter11(this, void 0, void 0, function* () {
             const statusCode = res.message.statusCode || 0;
             const response = {
               statusCode,
@@ -19532,9 +19532,9 @@ var require_constants6 = __commonJS({
 var require_debug = __commonJS({
   "node_modules/semver/internal/debug.js"(exports2, module2) {
     "use strict";
-    var debug2 = typeof process === "object" && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? (...args) => console.error("SEMVER", ...args) : () => {
+    var debug3 = typeof process === "object" && process.env && process.env.NODE_DEBUG && /\bsemver\b/i.test(process.env.NODE_DEBUG) ? (...args) => console.error("SEMVER", ...args) : () => {
     };
-    module2.exports = debug2;
+    module2.exports = debug3;
   }
 });
 
@@ -19547,7 +19547,7 @@ var require_re = __commonJS({
       MAX_SAFE_BUILD_LENGTH,
       MAX_LENGTH
     } = require_constants6();
-    var debug2 = require_debug();
+    var debug3 = require_debug();
     exports2 = module2.exports = {};
     var re = exports2.re = [];
     var safeRe = exports2.safeRe = [];
@@ -19570,7 +19570,7 @@ var require_re = __commonJS({
     var createToken = (name, value, isGlobal) => {
       const safe = makeSafeRegex(value);
       const index = R++;
-      debug2(name, index, value);
+      debug3(name, index, value);
       t[name] = index;
       src[index] = value;
       safeSrc[index] = safe;
@@ -19674,7 +19674,7 @@ var require_identifiers = __commonJS({
 var require_semver = __commonJS({
   "node_modules/semver/classes/semver.js"(exports2, module2) {
     "use strict";
-    var debug2 = require_debug();
+    var debug3 = require_debug();
     var { MAX_LENGTH, MAX_SAFE_INTEGER } = require_constants6();
     var { safeRe: re, t } = require_re();
     var parseOptions = require_parse_options();
@@ -19696,7 +19696,7 @@ var require_semver = __commonJS({
             `version is longer than ${MAX_LENGTH} characters`
           );
         }
-        debug2("SemVer", version, options);
+        debug3("SemVer", version, options);
         this.options = options;
         this.loose = !!options.loose;
         this.includePrerelease = !!options.includePrerelease;
@@ -19744,7 +19744,7 @@ var require_semver = __commonJS({
         return this.version;
       }
       compare(other) {
-        debug2("SemVer.compare", this.version, this.options, other);
+        debug3("SemVer.compare", this.version, this.options, other);
         if (!(other instanceof _SemVer)) {
           if (typeof other === "string" && other === this.version) {
             return 0;
@@ -19795,7 +19795,7 @@ var require_semver = __commonJS({
         do {
           const a = this.prerelease[i];
           const b = other.prerelease[i];
-          debug2("prerelease compare", i, a, b);
+          debug3("prerelease compare", i, a, b);
           if (a === void 0 && b === void 0) {
             return 0;
           } else if (b === void 0) {
@@ -19817,7 +19817,7 @@ var require_semver = __commonJS({
         do {
           const a = this.build[i];
           const b = other.build[i];
-          debug2("build compare", i, a, b);
+          debug3("build compare", i, a, b);
           if (a === void 0 && b === void 0) {
             return 0;
           } else if (b === void 0) {
@@ -20445,21 +20445,21 @@ var require_range = __commonJS({
         const loose = this.options.loose;
         const hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE];
         range = range.replace(hr, hyphenReplace(this.options.includePrerelease));
-        debug2("hyphen replace", range);
+        debug3("hyphen replace", range);
         range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace);
-        debug2("comparator trim", range);
+        debug3("comparator trim", range);
         range = range.replace(re[t.TILDETRIM], tildeTrimReplace);
-        debug2("tilde trim", range);
+        debug3("tilde trim", range);
         range = range.replace(re[t.CARETTRIM], caretTrimReplace);
-        debug2("caret trim", range);
+        debug3("caret trim", range);
         let rangeList = range.split(" ").map((comp) => parseComparator(comp, this.options)).join(" ").split(/\s+/).map((comp) => replaceGTE0(comp, this.options));
         if (loose) {
           rangeList = rangeList.filter((comp) => {
-            debug2("loose invalid filter", comp, this.options);
+            debug3("loose invalid filter", comp, this.options);
             return !!comp.match(re[t.COMPARATORLOOSE]);
           });
         }
-        debug2("range list", rangeList);
+        debug3("range list", rangeList);
         const rangeMap = /* @__PURE__ */ new Map();
         const comparators = rangeList.map((comp) => new Comparator(comp, this.options));
         for (const comp of comparators) {
@@ -20514,7 +20514,7 @@ var require_range = __commonJS({
     var cache = new LRU();
     var parseOptions = require_parse_options();
     var Comparator = require_comparator();
-    var debug2 = require_debug();
+    var debug3 = require_debug();
     var SemVer = require_semver();
     var {
       safeRe: re,
@@ -20540,15 +20540,15 @@ var require_range = __commonJS({
     };
     var parseComparator = (comp, options) => {
       comp = comp.replace(re[t.BUILD], "");
-      debug2("comp", comp, options);
+      debug3("comp", comp, options);
       comp = replaceCarets(comp, options);
-      debug2("caret", comp);
+      debug3("caret", comp);
       comp = replaceTildes(comp, options);
-      debug2("tildes", comp);
+      debug3("tildes", comp);
       comp = replaceXRanges(comp, options);
-      debug2("xrange", comp);
+      debug3("xrange", comp);
       comp = replaceStars(comp, options);
-      debug2("stars", comp);
+      debug3("stars", comp);
       return comp;
     };
     var isX = (id) => !id || id.toLowerCase() === "x" || id === "*";
@@ -20558,7 +20558,7 @@ var require_range = __commonJS({
     var replaceTilde = (comp, options) => {
       const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE];
       return comp.replace(r, (_, M, m, p, pr) => {
-        debug2("tilde", comp, _, M, m, p, pr);
+        debug3("tilde", comp, _, M, m, p, pr);
         let ret;
         if (isX(M)) {
           ret = "";
@@ -20567,12 +20567,12 @@ var require_range = __commonJS({
         } else if (isX(p)) {
           ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`;
         } else if (pr) {
-          debug2("replaceTilde pr", pr);
+          debug3("replaceTilde pr", pr);
           ret = `>=${M}.${m}.${p}-${pr} <${M}.${+m + 1}.0-0`;
         } else {
           ret = `>=${M}.${m}.${p} <${M}.${+m + 1}.0-0`;
         }
-        debug2("tilde return", ret);
+        debug3("tilde return", ret);
         return ret;
       });
     };
@@ -20580,11 +20580,11 @@ var require_range = __commonJS({
       return comp.trim().split(/\s+/).map((c) => replaceCaret(c, options)).join(" ");
     };
     var replaceCaret = (comp, options) => {
-      debug2("caret", comp, options);
+      debug3("caret", comp, options);
       const r = options.loose ? re[t.CARETLOOSE] : re[t.CARET];
       const z = options.includePrerelease ? "-0" : "";
       return comp.replace(r, (_, M, m, p, pr) => {
-        debug2("caret", comp, _, M, m, p, pr);
+        debug3("caret", comp, _, M, m, p, pr);
         let ret;
         if (isX(M)) {
           ret = "";
@@ -20597,7 +20597,7 @@ var require_range = __commonJS({
             ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`;
           }
         } else if (pr) {
-          debug2("replaceCaret pr", pr);
+          debug3("replaceCaret pr", pr);
           if (M === "0") {
             if (m === "0") {
               ret = `>=${M}.${m}.${p}-${pr} <${M}.${m}.${+p + 1}-0`;
@@ -20608,7 +20608,7 @@ var require_range = __commonJS({
             ret = `>=${M}.${m}.${p}-${pr} <${+M + 1}.0.0-0`;
           }
         } else {
-          debug2("no pr");
+          debug3("no pr");
           if (M === "0") {
             if (m === "0") {
               ret = `>=${M}.${m}.${p}${z} <${M}.${m}.${+p + 1}-0`;
@@ -20619,19 +20619,19 @@ var require_range = __commonJS({
             ret = `>=${M}.${m}.${p} <${+M + 1}.0.0-0`;
           }
         }
-        debug2("caret return", ret);
+        debug3("caret return", ret);
         return ret;
       });
     };
     var replaceXRanges = (comp, options) => {
-      debug2("replaceXRanges", comp, options);
+      debug3("replaceXRanges", comp, options);
       return comp.split(/\s+/).map((c) => replaceXRange(c, options)).join(" ");
     };
     var replaceXRange = (comp, options) => {
       comp = comp.trim();
       const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
       return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
-        debug2("xRange", comp, ret, gtlt, M, m, p, pr);
+        debug3("xRange", comp, ret, gtlt, M, m, p, pr);
         const xM = isX(M);
         const xm = xM || isX(m);
         const xp = xm || isX(p);
@@ -20678,16 +20678,16 @@ var require_range = __commonJS({
         } else if (xp) {
           ret = `>=${M}.${m}.0${pr} <${M}.${+m + 1}.0-0`;
         }
-        debug2("xRange return", ret);
+        debug3("xRange return", ret);
         return ret;
       });
     };
     var replaceStars = (comp, options) => {
-      debug2("replaceStars", comp, options);
+      debug3("replaceStars", comp, options);
       return comp.trim().replace(re[t.STAR], "");
     };
     var replaceGTE0 = (comp, options) => {
-      debug2("replaceGTE0", comp, options);
+      debug3("replaceGTE0", comp, options);
       return comp.trim().replace(re[options.includePrerelease ? t.GTE0PRE : t.GTE0], "");
     };
     var hyphenReplace = (incPr) => ($0, from, fM, fm, fp, fpr, fb, to, tM, tm, tp, tpr) => {
@@ -20725,7 +20725,7 @@ var require_range = __commonJS({
       }
       if (version.prerelease.length && !options.includePrerelease) {
         for (let i = 0; i < set.length; i++) {
-          debug2(set[i].semver);
+          debug3(set[i].semver);
           if (set[i].semver === Comparator.ANY) {
             continue;
           }
@@ -20762,7 +20762,7 @@ var require_comparator = __commonJS({
           }
         }
         comp = comp.trim().split(/\s+/).join(" ");
-        debug2("comparator", comp, options);
+        debug3("comparator", comp, options);
         this.options = options;
         this.loose = !!options.loose;
         this.parse(comp);
@@ -20771,7 +20771,7 @@ var require_comparator = __commonJS({
         } else {
           this.value = this.operator + this.semver.version;
         }
-        debug2("comp", this);
+        debug3("comp", this);
       }
       parse(comp) {
         const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR];
@@ -20793,7 +20793,7 @@ var require_comparator = __commonJS({
         return this.value;
       }
       test(version) {
-        debug2("Comparator.test", version, this.options.loose);
+        debug3("Comparator.test", version, this.options.loose);
         if (this.semver === ANY || version === ANY) {
           return true;
         }
@@ -20850,7 +20850,7 @@ var require_comparator = __commonJS({
     var parseOptions = require_parse_options();
     var { safeRe: re, t } = require_re();
     var cmp = require_cmp();
-    var debug2 = require_debug();
+    var debug3 = require_debug();
     var SemVer = require_semver();
     var Range = require_range();
   }
@@ -21336,7 +21336,7 @@ var require_semver2 = __commonJS({
   "node_modules/semver/index.js"(exports2, module2) {
     "use strict";
     var internalRe = require_re();
-    var constants3 = require_constants6();
+    var constants4 = require_constants6();
     var SemVer = require_semver();
     var identifiers = require_identifiers();
     var parse2 = require_parse2();
@@ -21418,8 +21418,8 @@ var require_semver2 = __commonJS({
       re: internalRe.re,
       src: internalRe.src,
       tokens: internalRe.t,
-      SEMVER_SPEC_VERSION: constants3.SEMVER_SPEC_VERSION,
-      RELEASE_TYPES: constants3.RELEASE_TYPES,
+      SEMVER_SPEC_VERSION: constants4.SEMVER_SPEC_VERSION,
+      RELEASE_TYPES: constants4.RELEASE_TYPES,
       compareIdentifiers: identifiers.compareIdentifiers,
       rcompareIdentifiers: identifiers.rcompareIdentifiers
     };
@@ -21514,7 +21514,6 @@ function issueFileCommand(command, message) {
 }
 
 // node_modules/@actions/core/lib/core.js
-var os5 = __toESM(require("os"), 1);
 var path4 = __toESM(require("path"), 1);
 
 // node_modules/@actions/http-client/lib/index.js
@@ -23339,9 +23338,9 @@ var arch = import_os2.default.arch();
 
 // node_modules/@actions/core/lib/core.js
 var ExitCode;
-(function(ExitCode2) {
-  ExitCode2[ExitCode2["Success"] = 0] = "Success";
-  ExitCode2[ExitCode2["Failure"] = 1] = "Failure";
+(function(ExitCode3) {
+  ExitCode3[ExitCode3["Success"] = 0] = "Success";
+  ExitCode3[ExitCode3["Failure"] = 1] = "Failure";
 })(ExitCode || (ExitCode = {}));
 function addPath(inputPath) {
   const filePath = process.env["GITHUB_PATH"] || "";
@@ -23377,20 +23376,11 @@ function setFailed(message) {
   process.exitCode = ExitCode.Failure;
   error(message);
 }
-function isDebug() {
-  return process.env["RUNNER_DEBUG"] === "1";
-}
-function debug(message) {
-  issueCommand("debug", {}, message);
-}
 function error(message, properties = {}) {
   issueCommand("error", toCommandProperties(properties), message instanceof Error ? message.toString() : message);
 }
 function warning(message, properties = {}) {
   issueCommand("warning", toCommandProperties(properties), message instanceof Error ? message.toString() : message);
-}
-function info(message) {
-  process.stdout.write(message + os5.EOL);
 }
 
 // node_modules/@actions/github/lib/context.js
@@ -27172,6 +27162,372 @@ async function analyze() {
   }
 }
 
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/command.js
+var os5 = __toESM(require("os"), 1);
+
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/utils.js
+function toCommandValue2(input) {
+  if (input === null || input === void 0) {
+    return "";
+  } else if (typeof input === "string" || input instanceof String) {
+    return input;
+  }
+  return JSON.stringify(input);
+}
+
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/command.js
+function issueCommand2(command, properties, message) {
+  const cmd = new Command2(command, properties, message);
+  process.stdout.write(cmd.toString() + os5.EOL);
+}
+var CMD_STRING2 = "::";
+var Command2 = class {
+  constructor(command, properties, message) {
+    if (!command) {
+      command = "missing.command";
+    }
+    this.command = command;
+    this.properties = properties;
+    this.message = message;
+  }
+  toString() {
+    let cmdStr = CMD_STRING2 + this.command;
+    if (this.properties && Object.keys(this.properties).length > 0) {
+      cmdStr += " ";
+      let first = true;
+      for (const key in this.properties) {
+        if (this.properties.hasOwnProperty(key)) {
+          const val = this.properties[key];
+          if (val) {
+            if (first) {
+              first = false;
+            } else {
+              cmdStr += ",";
+            }
+            cmdStr += `${key}=${escapeProperty2(val)}`;
+          }
+        }
+      }
+    }
+    cmdStr += `${CMD_STRING2}${escapeData2(this.message)}`;
+    return cmdStr;
+  }
+};
+function escapeData2(s) {
+  return toCommandValue2(s).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A");
+}
+function escapeProperty2(s) {
+  return toCommandValue2(s).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A").replace(/:/g, "%3A").replace(/,/g, "%2C");
+}
+
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/core.js
+var os7 = __toESM(require("os"), 1);
+
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/summary.js
+var import_os4 = require("os");
+var import_fs3 = require("fs");
+var __awaiter8 = function(thisArg, _arguments, P, generator) {
+  function adopt(value) {
+    return value instanceof P ? value : new P(function(resolve2) {
+      resolve2(value);
+    });
+  }
+  return new (P || (P = Promise))(function(resolve2, reject) {
+    function fulfilled(value) {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function rejected(value) {
+      try {
+        step(generator["throw"](value));
+      } catch (e) {
+        reject(e);
+      }
+    }
+    function step(result) {
+      result.done ? resolve2(result.value) : adopt(result.value).then(fulfilled, rejected);
+    }
+    step((generator = generator.apply(thisArg, _arguments || [])).next());
+  });
+};
+var { access: access2, appendFile: appendFile2, writeFile: writeFile2 } = import_fs3.promises;
+var SUMMARY_ENV_VAR2 = "GITHUB_STEP_SUMMARY";
+var Summary2 = class {
+  constructor() {
+    this._buffer = "";
+  }
+  /**
+   * Finds the summary file path from the environment, rejects if env var is not found or file does not exist
+   * Also checks r/w permissions.
+   *
+   * @returns step summary file path
+   */
+  filePath() {
+    return __awaiter8(this, void 0, void 0, function* () {
+      if (this._filePath) {
+        return this._filePath;
+      }
+      const pathFromEnv = process.env[SUMMARY_ENV_VAR2];
+      if (!pathFromEnv) {
+        throw new Error(`Unable to find environment variable for $${SUMMARY_ENV_VAR2}. Check if your runtime environment supports job summaries.`);
+      }
+      try {
+        yield access2(pathFromEnv, import_fs3.constants.R_OK | import_fs3.constants.W_OK);
+      } catch (_a) {
+        throw new Error(`Unable to access summary file: '${pathFromEnv}'. Check if the file has correct read/write permissions.`);
+      }
+      this._filePath = pathFromEnv;
+      return this._filePath;
+    });
+  }
+  /**
+   * Wraps content in an HTML tag, adding any HTML attributes
+   *
+   * @param {string} tag HTML tag to wrap
+   * @param {string | null} content content within the tag
+   * @param {[attribute: string]: string} attrs key-value list of HTML attributes to add
+   *
+   * @returns {string} content wrapped in HTML element
+   */
+  wrap(tag, content, attrs = {}) {
+    const htmlAttrs = Object.entries(attrs).map(([key, value]) => ` ${key}="${value}"`).join("");
+    if (!content) {
+      return `<${tag}${htmlAttrs}>`;
+    }
+    return `<${tag}${htmlAttrs}>${content}</${tag}>`;
+  }
+  /**
+   * Writes text in the buffer to the summary buffer file and empties buffer. Will append by default.
+   *
+   * @param {SummaryWriteOptions} [options] (optional) options for write operation
+   *
+   * @returns {Promise<Summary>} summary instance
+   */
+  write(options) {
+    return __awaiter8(this, void 0, void 0, function* () {
+      const overwrite = !!(options === null || options === void 0 ? void 0 : options.overwrite);
+      const filePath = yield this.filePath();
+      const writeFunc = overwrite ? writeFile2 : appendFile2;
+      yield writeFunc(filePath, this._buffer, { encoding: "utf8" });
+      return this.emptyBuffer();
+    });
+  }
+  /**
+   * Clears the summary buffer and wipes the summary file
+   *
+   * @returns {Summary} summary instance
+   */
+  clear() {
+    return __awaiter8(this, void 0, void 0, function* () {
+      return this.emptyBuffer().write({ overwrite: true });
+    });
+  }
+  /**
+   * Returns the current summary buffer as a string
+   *
+   * @returns {string} string of summary buffer
+   */
+  stringify() {
+    return this._buffer;
+  }
+  /**
+   * If the summary buffer is empty
+   *
+   * @returns {boolen} true if the buffer is empty
+   */
+  isEmptyBuffer() {
+    return this._buffer.length === 0;
+  }
+  /**
+   * Resets the summary buffer without writing to summary file
+   *
+   * @returns {Summary} summary instance
+   */
+  emptyBuffer() {
+    this._buffer = "";
+    return this;
+  }
+  /**
+   * Adds raw text to the summary buffer
+   *
+   * @param {string} text content to add
+   * @param {boolean} [addEOL=false] (optional) append an EOL to the raw text (default: false)
+   *
+   * @returns {Summary} summary instance
+   */
+  addRaw(text, addEOL = false) {
+    this._buffer += text;
+    return addEOL ? this.addEOL() : this;
+  }
+  /**
+   * Adds the operating system-specific end-of-line marker to the buffer
+   *
+   * @returns {Summary} summary instance
+   */
+  addEOL() {
+    return this.addRaw(import_os4.EOL);
+  }
+  /**
+   * Adds an HTML codeblock to the summary buffer
+   *
+   * @param {string} code content to render within fenced code block
+   * @param {string} lang (optional) language to syntax highlight code
+   *
+   * @returns {Summary} summary instance
+   */
+  addCodeBlock(code, lang) {
+    const attrs = Object.assign({}, lang && { lang });
+    const element = this.wrap("pre", this.wrap("code", code), attrs);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML list to the summary buffer
+   *
+   * @param {string[]} items list of items to render
+   * @param {boolean} [ordered=false] (optional) if the rendered list should be ordered or not (default: false)
+   *
+   * @returns {Summary} summary instance
+   */
+  addList(items, ordered = false) {
+    const tag = ordered ? "ol" : "ul";
+    const listItems = items.map((item) => this.wrap("li", item)).join("");
+    const element = this.wrap(tag, listItems);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML table to the summary buffer
+   *
+   * @param {SummaryTableCell[]} rows table rows
+   *
+   * @returns {Summary} summary instance
+   */
+  addTable(rows) {
+    const tableBody = rows.map((row) => {
+      const cells = row.map((cell) => {
+        if (typeof cell === "string") {
+          return this.wrap("td", cell);
+        }
+        const { header, data, colspan, rowspan } = cell;
+        const tag = header ? "th" : "td";
+        const attrs = Object.assign(Object.assign({}, colspan && { colspan }), rowspan && { rowspan });
+        return this.wrap(tag, data, attrs);
+      }).join("");
+      return this.wrap("tr", cells);
+    }).join("");
+    const element = this.wrap("table", tableBody);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds a collapsable HTML details element to the summary buffer
+   *
+   * @param {string} label text for the closed state
+   * @param {string} content collapsable content
+   *
+   * @returns {Summary} summary instance
+   */
+  addDetails(label, content) {
+    const element = this.wrap("details", this.wrap("summary", label) + content);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML image tag to the summary buffer
+   *
+   * @param {string} src path to the image you to embed
+   * @param {string} alt text description of the image
+   * @param {SummaryImageOptions} options (optional) addition image attributes
+   *
+   * @returns {Summary} summary instance
+   */
+  addImage(src, alt, options) {
+    const { width, height } = options || {};
+    const attrs = Object.assign(Object.assign({}, width && { width }), height && { height });
+    const element = this.wrap("img", null, Object.assign({ src, alt }, attrs));
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML section heading element
+   *
+   * @param {string} text heading text
+   * @param {number | string} [level=1] (optional) the heading level, default: 1
+   *
+   * @returns {Summary} summary instance
+   */
+  addHeading(text, level) {
+    const tag = `h${level}`;
+    const allowedTag = ["h1", "h2", "h3", "h4", "h5", "h6"].includes(tag) ? tag : "h1";
+    const element = this.wrap(allowedTag, text);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML thematic break (<hr>) to the summary buffer
+   *
+   * @returns {Summary} summary instance
+   */
+  addSeparator() {
+    const element = this.wrap("hr", null);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML line break (<br>) to the summary buffer
+   *
+   * @returns {Summary} summary instance
+   */
+  addBreak() {
+    const element = this.wrap("br", null);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML blockquote to the summary buffer
+   *
+   * @param {string} text quote text
+   * @param {string} cite (optional) citation url
+   *
+   * @returns {Summary} summary instance
+   */
+  addQuote(text, cite) {
+    const attrs = Object.assign({}, cite && { cite });
+    const element = this.wrap("blockquote", text, attrs);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML anchor tag to the summary buffer
+   *
+   * @param {string} text link text/content
+   * @param {string} href hyperlink
+   *
+   * @returns {Summary} summary instance
+   */
+  addLink(text, href) {
+    const element = this.wrap("a", text, { href });
+    return this.addRaw(element).addEOL();
+  }
+};
+var _summary2 = new Summary2();
+
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/platform.js
+var import_os5 = __toESM(require("os"), 1);
+var platform2 = import_os5.default.platform();
+var arch2 = import_os5.default.arch();
+
+// node_modules/@actions/tool-cache/node_modules/@actions/core/lib/core.js
+var ExitCode2;
+(function(ExitCode3) {
+  ExitCode3[ExitCode3["Success"] = 0] = "Success";
+  ExitCode3[ExitCode3["Failure"] = 1] = "Failure";
+})(ExitCode2 || (ExitCode2 = {}));
+function isDebug() {
+  return process.env["RUNNER_DEBUG"] === "1";
+}
+function debug2(message) {
+  issueCommand2("debug", {}, message);
+}
+function info(message) {
+  process.stdout.write(message + os7.EOL);
+}
+
 // node_modules/@actions/tool-cache/lib/tool-cache.js
 var crypto = __toESM(require("crypto"), 1);
 var fs3 = __toESM(require("fs"), 1);
@@ -27180,7 +27536,7 @@ var fs3 = __toESM(require("fs"), 1);
 var semver = __toESM(require_semver2(), 1);
 
 // node_modules/@actions/tool-cache/lib/tool-cache.js
-var os6 = __toESM(require("os"), 1);
+var os8 = __toESM(require("os"), 1);
 var path5 = __toESM(require("path"), 1);
 var semver2 = __toESM(require_semver2(), 1);
 var stream = __toESM(require("stream"), 1);
@@ -27188,7 +27544,7 @@ var util = __toESM(require("util"), 1);
 var import_assert2 = require("assert");
 
 // node_modules/@actions/tool-cache/lib/retry-helper.js
-var __awaiter8 = function(thisArg, _arguments, P, generator) {
+var __awaiter9 = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
       resolve2(value);
@@ -27228,7 +27584,7 @@ var RetryHelper = class {
     }
   }
   execute(action, isRetryable) {
-    return __awaiter8(this, void 0, void 0, function* () {
+    return __awaiter9(this, void 0, void 0, function* () {
       let attempt = 1;
       while (attempt < this.maxAttempts) {
         try {
@@ -27251,14 +27607,14 @@ var RetryHelper = class {
     return Math.floor(Math.random() * (this.maxSeconds - this.minSeconds + 1)) + this.minSeconds;
   }
   sleep(seconds) {
-    return __awaiter8(this, void 0, void 0, function* () {
+    return __awaiter9(this, void 0, void 0, function* () {
       return new Promise((resolve2) => setTimeout(resolve2, seconds * 1e3));
     });
   }
 };
 
 // node_modules/@actions/tool-cache/lib/tool-cache.js
-var __awaiter9 = function(thisArg, _arguments, P, generator) {
+var __awaiter10 = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
       resolve2(value);
@@ -27296,16 +27652,16 @@ var IS_WINDOWS3 = process.platform === "win32";
 var IS_MAC = process.platform === "darwin";
 var userAgent2 = "actions/tool-cache";
 function downloadTool(url, dest, auth2, headers) {
-  return __awaiter9(this, void 0, void 0, function* () {
+  return __awaiter10(this, void 0, void 0, function* () {
     dest = dest || path5.join(_getTempDirectory(), crypto.randomUUID());
     yield mkdirP(path5.dirname(dest));
-    debug(`Downloading ${url}`);
-    debug(`Destination ${dest}`);
+    debug2(`Downloading ${url}`);
+    debug2(`Destination ${dest}`);
     const maxAttempts = 3;
     const minSeconds = _getGlobal("TEST_DOWNLOAD_TOOL_RETRY_MIN_SECONDS", 10);
     const maxSeconds = _getGlobal("TEST_DOWNLOAD_TOOL_RETRY_MAX_SECONDS", 20);
     const retryHelper = new RetryHelper(maxAttempts, minSeconds, maxSeconds);
-    return yield retryHelper.execute(() => __awaiter9(this, void 0, void 0, function* () {
+    return yield retryHelper.execute(() => __awaiter10(this, void 0, void 0, function* () {
       return yield downloadToolAttempt(url, dest || "", auth2, headers);
     }), (err) => {
       if (err instanceof HTTPError && err.httpStatusCode) {
@@ -27318,7 +27674,7 @@ function downloadTool(url, dest, auth2, headers) {
   });
 }
 function downloadToolAttempt(url, dest, auth2, headers) {
-  return __awaiter9(this, void 0, void 0, function* () {
+  return __awaiter10(this, void 0, void 0, function* () {
     if (fs3.existsSync(dest)) {
       throw new Error(`Destination file path ${dest} already exists`);
     }
@@ -27326,7 +27682,7 @@ function downloadToolAttempt(url, dest, auth2, headers) {
       allowRetries: false
     });
     if (auth2) {
-      debug("set auth");
+      debug2("set auth");
       if (headers === void 0) {
         headers = {};
       }
@@ -27335,7 +27691,7 @@ function downloadToolAttempt(url, dest, auth2, headers) {
     const response = yield http2.get(url, headers);
     if (response.message.statusCode !== 200) {
       const err = new HTTPError(response.message.statusCode);
-      debug(`Failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`);
+      debug2(`Failed to download from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`);
       throw err;
     }
     const pipeline2 = util.promisify(stream.pipeline);
@@ -27344,23 +27700,23 @@ function downloadToolAttempt(url, dest, auth2, headers) {
     let succeeded = false;
     try {
       yield pipeline2(readStream, fs3.createWriteStream(dest));
-      debug("download complete");
+      debug2("download complete");
       succeeded = true;
       return dest;
     } finally {
       if (!succeeded) {
-        debug("download failed");
+        debug2("download failed");
         try {
           yield rmRF(dest);
         } catch (err) {
-          debug(`Failed to delete '${dest}'. ${err.message}`);
+          debug2(`Failed to delete '${dest}'. ${err.message}`);
         }
       }
     }
   });
 }
 function extractZip(file, dest) {
-  return __awaiter9(this, void 0, void 0, function* () {
+  return __awaiter10(this, void 0, void 0, function* () {
     if (!file) {
       throw new Error("parameter 'file' is required");
     }
@@ -27374,7 +27730,7 @@ function extractZip(file, dest) {
   });
 }
 function extractZipWin(file, dest) {
-  return __awaiter9(this, void 0, void 0, function* () {
+  return __awaiter10(this, void 0, void 0, function* () {
     const escapedFile = file.replace(/'/g, "''").replace(/"|\n|\r/g, "");
     const escapedDest = dest.replace(/'/g, "''").replace(/"|\n|\r/g, "");
     const pwshPath = yield which("pwsh", false);
@@ -27394,7 +27750,7 @@ function extractZipWin(file, dest) {
         "-Command",
         pwshCommand
       ];
-      debug(`Using pwsh at path: ${pwshPath}`);
+      debug2(`Using pwsh at path: ${pwshPath}`);
       yield exec(`"${pwshPath}"`, args);
     } else {
       const powershellCommand = [
@@ -27414,13 +27770,13 @@ function extractZipWin(file, dest) {
         powershellCommand
       ];
       const powershellPath = yield which("powershell", true);
-      debug(`Using powershell at path: ${powershellPath}`);
+      debug2(`Using powershell at path: ${powershellPath}`);
       yield exec(`"${powershellPath}"`, args);
     }
   });
 }
 function extractZipNix(file, dest) {
-  return __awaiter9(this, void 0, void 0, function* () {
+  return __awaiter10(this, void 0, void 0, function* () {
     const unzipPath = yield which("unzip", true);
     const args = [file];
     if (!isDebug()) {
@@ -27430,60 +27786,60 @@ function extractZipNix(file, dest) {
     yield exec(`"${unzipPath}"`, args, { cwd: dest });
   });
 }
-function cacheDir(sourceDir, tool, version, arch4) {
-  return __awaiter9(this, void 0, void 0, function* () {
+function cacheDir(sourceDir, tool, version, arch5) {
+  return __awaiter10(this, void 0, void 0, function* () {
     version = semver2.clean(version) || version;
-    arch4 = arch4 || os6.arch();
-    debug(`Caching tool ${tool} ${version} ${arch4}`);
-    debug(`source dir: ${sourceDir}`);
+    arch5 = arch5 || os8.arch();
+    debug2(`Caching tool ${tool} ${version} ${arch5}`);
+    debug2(`source dir: ${sourceDir}`);
     if (!fs3.statSync(sourceDir).isDirectory()) {
       throw new Error("sourceDir is not a directory");
     }
-    const destPath = yield _createToolPath(tool, version, arch4);
+    const destPath = yield _createToolPath(tool, version, arch5);
     for (const itemName of fs3.readdirSync(sourceDir)) {
       const s = path5.join(sourceDir, itemName);
       yield cp(s, destPath, { recursive: true });
     }
-    _completeToolPath(tool, version, arch4);
+    _completeToolPath(tool, version, arch5);
     return destPath;
   });
 }
-function find(toolName, versionSpec, arch4) {
+function find(toolName, versionSpec, arch5) {
   if (!toolName) {
     throw new Error("toolName parameter is required");
   }
   if (!versionSpec) {
     throw new Error("versionSpec parameter is required");
   }
-  arch4 = arch4 || os6.arch();
+  arch5 = arch5 || os8.arch();
   if (!isExplicitVersion(versionSpec)) {
-    const localVersions = findAllVersions(toolName, arch4);
+    const localVersions = findAllVersions(toolName, arch5);
     const match = evaluateVersions(localVersions, versionSpec);
     versionSpec = match;
   }
   let toolPath = "";
   if (versionSpec) {
     versionSpec = semver2.clean(versionSpec) || "";
-    const cachePath = path5.join(_getCacheDirectory(), toolName, versionSpec, arch4);
-    debug(`checking cache: ${cachePath}`);
+    const cachePath = path5.join(_getCacheDirectory(), toolName, versionSpec, arch5);
+    debug2(`checking cache: ${cachePath}`);
     if (fs3.existsSync(cachePath) && fs3.existsSync(`${cachePath}.complete`)) {
-      debug(`Found tool in cache ${toolName} ${versionSpec} ${arch4}`);
+      debug2(`Found tool in cache ${toolName} ${versionSpec} ${arch5}`);
       toolPath = cachePath;
     } else {
-      debug("not found");
+      debug2("not found");
     }
   }
   return toolPath;
 }
-function findAllVersions(toolName, arch4) {
+function findAllVersions(toolName, arch5) {
   const versions = [];
-  arch4 = arch4 || os6.arch();
+  arch5 = arch5 || os8.arch();
   const toolPath = path5.join(_getCacheDirectory(), toolName);
   if (fs3.existsSync(toolPath)) {
     const children = fs3.readdirSync(toolPath);
     for (const child2 of children) {
       if (isExplicitVersion(child2)) {
-        const fullPath = path5.join(toolPath, child2, arch4 || "");
+        const fullPath = path5.join(toolPath, child2, arch5 || "");
         if (fs3.existsSync(fullPath) && fs3.existsSync(`${fullPath}.complete`)) {
           versions.push(child2);
         }
@@ -27493,7 +27849,7 @@ function findAllVersions(toolName, arch4) {
   return versions;
 }
 function _createExtractFolder(dest) {
-  return __awaiter9(this, void 0, void 0, function* () {
+  return __awaiter10(this, void 0, void 0, function* () {
     if (!dest) {
       dest = path5.join(_getTempDirectory(), crypto.randomUUID());
     }
@@ -27501,10 +27857,10 @@ function _createExtractFolder(dest) {
     return dest;
   });
 }
-function _createToolPath(tool, version, arch4) {
-  return __awaiter9(this, void 0, void 0, function* () {
-    const folderPath = path5.join(_getCacheDirectory(), tool, semver2.clean(version) || version, arch4 || "");
-    debug(`destination ${folderPath}`);
+function _createToolPath(tool, version, arch5) {
+  return __awaiter10(this, void 0, void 0, function* () {
+    const folderPath = path5.join(_getCacheDirectory(), tool, semver2.clean(version) || version, arch5 || "");
+    debug2(`destination ${folderPath}`);
     const markerPath = `${folderPath}.complete`;
     yield rmRF(folderPath);
     yield rmRF(markerPath);
@@ -27512,22 +27868,22 @@ function _createToolPath(tool, version, arch4) {
     return folderPath;
   });
 }
-function _completeToolPath(tool, version, arch4) {
-  const folderPath = path5.join(_getCacheDirectory(), tool, semver2.clean(version) || version, arch4 || "");
+function _completeToolPath(tool, version, arch5) {
+  const folderPath = path5.join(_getCacheDirectory(), tool, semver2.clean(version) || version, arch5 || "");
   const markerPath = `${folderPath}.complete`;
   fs3.writeFileSync(markerPath, "");
-  debug("finished caching tool");
+  debug2("finished caching tool");
 }
 function isExplicitVersion(versionSpec) {
   const c = semver2.clean(versionSpec) || "";
-  debug(`isExplicit: ${c}`);
+  debug2(`isExplicit: ${c}`);
   const valid2 = semver2.valid(c) != null;
-  debug(`explicit? ${valid2}`);
+  debug2(`explicit? ${valid2}`);
   return valid2;
 }
 function evaluateVersions(versions, versionSpec) {
   let version = "";
-  debug(`evaluating ${versions.length} versions`);
+  debug2(`evaluating ${versions.length} versions`);
   versions = versions.sort((a, b) => {
     if (semver2.gt(a, b)) {
       return 1;
@@ -27543,9 +27899,9 @@ function evaluateVersions(versions, versionSpec) {
     }
   }
   if (version) {
-    debug(`matched: ${version}`);
+    debug2(`matched: ${version}`);
   } else {
-    debug("match not found");
+    debug2("match not found");
   }
   return version;
 }
@@ -27568,9 +27924,9 @@ function _getGlobal(key, defaultValue) {
 var semver3 = __toESM(require_semver2());
 
 // src/system.ts
-var os7 = __toESM(require("node:os"));
+var os9 = __toESM(require("node:os"));
 function getArchitecture() {
-  switch (os7.arch()) {
+  switch (os9.arch()) {
     case "x64": {
       return "amd64" /* X64 */;
     }
@@ -27580,7 +27936,7 @@ function getArchitecture() {
   }
 }
 function getPlatform() {
-  switch (os7.platform()) {
+  switch (os9.platform()) {
     case "darwin": {
       return "darwin" /* Darwin */;
     }
@@ -27605,10 +27961,10 @@ async function getLatestRelease() {
     owner: "fossas",
     repo: "fossa-cli"
   });
-  const platform3 = getPlatform();
+  const platform4 = getPlatform();
   const architecture = getArchitecture();
   const cleanVersion = semver3.clean(version) ?? version;
-  const fname = `fossa_${cleanVersion}_${platform3}_${architecture}.zip`;
+  const fname = `fossa_${cleanVersion}_${platform4}_${architecture}.zip`;
   const assetIndex = assets.findIndex(
     (asset) => asset.browser_download_url.endsWith(fname)
   );
@@ -27620,8 +27976,8 @@ async function getLatestRelease() {
 }
 async function acquireFossaCli() {
   const { browserDownloadUrl, version } = await getLatestRelease();
-  const platform3 = getPlatform();
-  const cachedPath = find("fossa-cli", version, platform3);
+  const platform4 = getPlatform();
+  const cachedPath = find("fossa-cli", version, platform4);
   if (cachedPath === "") {
     const downloadedPath = await downloadTool(browserDownloadUrl);
     const extractedPath = await extractZip(downloadedPath);
@@ -27629,7 +27985,7 @@ async function acquireFossaCli() {
       extractedPath,
       "fossa-cli",
       version,
-      platform3
+      platform4
     );
     addPath(cachedPath2);
   } else {
