@@ -6,9 +6,7 @@
     "schedule:daily",
     ":disableRateLimiting",
     ":maintainLockFilesWeekly",
-    ":pinVersions",
     ":semanticCommitsDisabled"
   ],
-  "postUpdateOptions": ["yarnDedupeHighest"],
   "rebaseWhen": "conflicted"
 }

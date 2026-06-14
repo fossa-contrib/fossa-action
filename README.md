@@ -58,7 +58,7 @@ specify the version of the action _itself_.
 
 ```yml
 - name: Run FOSSA scan and upload build data
-  uses: fossa-contrib/fossa-action@v3
+  uses: fossa-contrib/fossa-action@v4
   #                               ^^^
   with:
     fossa-api-key: abcdefghijklmnopqrstuvwxyz
@@ -66,17 +66,17 @@ specify the version of the action _itself_.
 
 We recommend that you include the version of the action. We adhere to
 [semantic versioning](https://semver.org), it's safe to use the major version
-(`v1`) in your workflow. If you use the master branch, this could break your
+(`v4`) in your workflow. If you use the master branch, this could break your
 workflow when we publish a breaking update and increase the major version.
 
 ```yml
 steps:
   # Reference the major version of a release (most recommended)
-  - uses: fossa-contrib/fossa-action@v3
+  - uses: fossa-contrib/fossa-action@v4
   # Reference a specific commit (most strict)
   - uses: fossa-contrib/fossa-action@cdc5065
   # Reference a semver version of a release (not recommended)
-  - uses: fossa-contrib/fossa-action@v3.0.0
+  - uses: fossa-contrib/fossa-action@v4.0.0
   # Reference a branch (most dangerous)
   - uses: fossa-contrib/fossa-action@master
 ```
