@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Run FOSSA scan and upload build data
         uses: fossa-contrib/fossa-action@v3
