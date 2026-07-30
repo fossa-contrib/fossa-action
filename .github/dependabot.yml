@@ -1,0 +1,19 @@
+version: 2
+
+updates:
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      actions:
+        patterns:
+          - "@actions/*"
+      tsconfig:
+        patterns:
+          - "@tsconfig/*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily

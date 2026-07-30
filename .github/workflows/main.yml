@@ -57,7 +57,7 @@ jobs:
   build-and-push:
     name: Build and Push
 
-    if: ${{ github.event_name == 'pull_request' && github.actor == 'renovate[bot]' }}
+    if: ${{ github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
 
     permissions:
       contents: write
